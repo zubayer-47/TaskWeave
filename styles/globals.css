@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --dark-bg: 27 29 32;
+        --primary-foreground: 38 131 243;
+        --dashboard-bg: 35 38 43;
+        --task-stage-bg: 43 47 54;
+        --task-item-bg: 27 29 32;
+        --border: 58 63 68;
+    }
+}
+
+.light-bg {
+    background: linear-gradient(180deg, #f1f8ff 38%, #b4d6ff 100%);
+}

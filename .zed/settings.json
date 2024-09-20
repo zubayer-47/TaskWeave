@@ -1,0 +1,12 @@
+{
+  "languages": {
+    "TSX": {
+      "language_servers": ["!typescript-language-server", "vtsls", "..."],
+      "prettier": {
+        "allowed": true
+      }
+    }
+  },
+
+  "autosave": "on_focus_change"
+}
