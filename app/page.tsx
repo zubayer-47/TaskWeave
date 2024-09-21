@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -14,12 +15,12 @@ export default function Home() {
         </span>
       </div>
 
-      <button
-        type="button"
+      <Link
+        href="/auth"
         className="bg-primary-foreground hover:bg-primary-foreground/70 transition-colors px-5 py-3 rounded-lg text-gray-50 font-adlam-display text-xl mb-5"
       >
         Get Started
-      </button>
+      </Link>
 
       <div className="flex items-center">
         <div className="rounded-2xl relative w-[31.25rem] h-[22.1875rem]">
