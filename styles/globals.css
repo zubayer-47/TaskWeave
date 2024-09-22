@@ -10,9 +10,16 @@
         --task-stage-bg: 43 47 54;
         --task-item-bg: 27 29 32;
         --border: 58 63 68;
+        --success-button: 5 150 105;
+        --task-stage-warning: 245 158 11;
+        --task-stage-slate: 161 161 170;
     }
 }
 
 .light-bg {
     background: linear-gradient(180deg, #f1f8ff 38%, #b4d6ff 100%);
+}
+
+.dashboard-content-height {
+    height: calc(100vh - theme(spacing.44));
 }
