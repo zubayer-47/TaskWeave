@@ -83,7 +83,7 @@ const ProjectContent = () => {
 				<div className='bg-task-stage-bg h-full rounded-[2rem] overflow-hidden'>
 					<div className='bg-task-stage-bg h-full rounded-[2rem] overflow-hidden'>
 						<div className='bg-task-stage-warning py-2 text-center font-inter font-semibold text-white'>
-							In Progess
+							In Progress
 						</div>
 					</div>
 				</div>
