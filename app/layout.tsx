@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, ADLaM_Display } from "next/font/google";
 import "@/styles/globals.css";
-import { getAuth } from 'firebase/auth'
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,14 +28,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  // const auth = 
-
   return (
-    <html lang="en" className={`${adlam_display.variable}`}>
-      <body
-        className={`h-screen w-full light-bg antialiased ${inter.className}`}
-      >
+    <html lang="en" className={`light-bg ${adlam_display.variable}`}>
+      <body className={`h-full w-full antialiased ${inter.className}`}>
         <main>{children}</main>
       </body>
     </html>
