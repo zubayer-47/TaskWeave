@@ -30,6 +30,7 @@ export default function Home() {
             height={355}
             className="rounded-2xl shadow-2xl"
             alt="Dashboard Feature Image"
+            priority
           />
           <div className="absolute size-full inset-0 rounded-2xl bg-gray-900/40"></div>
         </div>
@@ -40,7 +41,7 @@ export default function Home() {
             height={355}
             className="rounded-2xl shadow-2xl"
             alt="Dashboard Feature Image"
-            // priority
+            priority
           />
           <div className="absolute size-full inset-0 rounded-2xl bg-gray-900/40"></div>
         </div>
