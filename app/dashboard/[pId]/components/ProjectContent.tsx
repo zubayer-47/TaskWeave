@@ -1,4 +1,7 @@
+import { Board } from '@/lib/types';
 import TaskStage from './partials/TaskStage';
+
+import data from '@/lib/data.json';
 
 const ProjectContent = () => {
 	return (
@@ -16,31 +19,13 @@ const ProjectContent = () => {
 
 			<div className='flex items-center gap-4 px-4 pb-1 dashboard-content-height w-full overflow-x-auto scrollbar-thin scrollbar-track-dark scrollbar-thumb-border'>
 				<TaskStage
-					tasks={[
-						{ id: '1', text: 'Hello Urgent Priority', priority: 'urgent' },
-						{ id: '2', text: 'Hello High Priority', priority: 'high' },
-						{ id: '3', text: 'Hello Medium Priority', priority: 'medium' },
-						{ id: '4', text: 'Hello Normal Priority', priority: 'normal' },
-						{ id: '5', text: 'Hello Normal Priority', priority: 'normal' },
-						{ id: '6', text: 'Hello Normal Priority', priority: 'normal' },
-						{ id: '7', text: 'Hello Normal Priority', priority: 'normal' },
-						{ id: '8', text: 'Hello Normal Priority', priority: 'normal' },
-					]}
+					tasks={data.stages[0].tasks}
 					task_header_bg='blue'
 				/>
 				<TaskStage task_header_bg='warning' />
 				<TaskStage task_header_bg='slate' />
 				<TaskStage
-					tasks={[
-						{ id: '1', text: 'Hello Urgent Priority', priority: 'urgent' },
-						{ id: '2', text: 'Hello High Priority', priority: 'high' },
-						{ id: '3', text: 'Hello Medium Priority', priority: 'medium' },
-						{ id: '4', text: 'Hello Normal Priority', priority: 'normal' },
-						{ id: '5', text: 'Hello Normal Priority', priority: 'normal' },
-						{ id: '6', text: 'Hello Normal Priority', priority: 'normal' },
-						{ id: '7', text: 'Hello Normal Priority', priority: 'normal' },
-						{ id: '8', text: 'Hello Normal Priority', priority: 'normal' },
-					]}
+					tasks={data.stages[3].tasks}
 					task_header_bg='success'
 				/>
 				<TaskStage task_header_bg='rose' />
