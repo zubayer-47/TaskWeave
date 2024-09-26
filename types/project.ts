@@ -1,7 +1,9 @@
+import { BaseEventPayload, ElementDragType } from "@atlaskit/pragmatic-drag-and-drop/dist/types/internal-types";
 
 export type TaskType = {
 	task_id: string;
 	text: string;
+	position: number;
 	priority: string;
 	stage_id: string;
 };
@@ -13,7 +15,6 @@ export type StageType = {
 };
 
 export type ProjectType = {
-	name: string;
-	stages: StageType[];
-	moveTask: (task_id: string, stage_id: string, prev_stage_id: string, position: number) => void;
+	stagesData: StageType[];
+	handleDrop: (args: BaseEventPayload<ElementDragType>) => void,
 };

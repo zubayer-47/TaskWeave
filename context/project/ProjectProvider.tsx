@@ -1,11 +1,10 @@
-import { createContext, useContext, useState } from "react";
-import dummyData from "@/lib/data.json";
-import { ProjectType } from "@/types/project";
+import { createContext, useCallback, useContext, useState } from "react";
+import { ProjectType, StageType, TaskType } from "@/types/project";
 
-const initProjectData: ProjectType = {
-	...dummyData,
-	moveTask: () => { },
-}
+import { BaseEventPayload, ElementDragType } from '@atlaskit/pragmatic-drag-and-drop/dist/types/internal-types';
+import { getReorderDestinationIndex } from '@atlaskit/pragmatic-drag-and-drop-hitbox/util/get-reorder-destination-index'
+import { reorder } from '@atlaskit/pragmatic-drag-and-drop/reorder'
+import data from "@/lib/data.json";
 
 const ProjectContext = createContext<ProjectType | null>(null);
 
@@ -14,38 +13,75 @@ export const useProject = () => {
 };
 
 const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
-	const [project, setProject] = useState<ProjectType>(initProjectData);
+	const [stagesData, setStagesData] = useState(data.stages);
 
-	const moveTask = (task_id: string, stage_id: string, prev_stage_id: string, position: number) => {
-		// toast.success('Task moved successfully');
+	const reorderTask = useCallback(({ stage_id, startIndex, finishIndex }: { stage_id: string, startIndex: number, finishIndex: number }) => {
+		const data: StageType[] = JSON.parse(JSON.stringify(stagesData));
 
-		const newData = { ...project };
+		const sourceStageData = data.find((stage: StageType) => stage.stage_id === stage_id);
 
-		const prev_stage = newData.stages.find((stage) => stage.stage_id === prev_stage_id);
+		if (sourceStageData) {
+			const updatedTasks = reorder({
+				list: sourceStageData.tasks,
+				startIndex,
+				finishIndex,
+			})
+			console.log("updatedTasks", updatedTasks);
 
-		if (prev_stage) {
-			const prev_task = prev_stage.tasks.find((task) => task.task_id === task_id);
-			
-			if (prev_task) {
-				prev_stage.tasks = prev_stage.tasks.filter((task) => task.task_id !== task_id);
+			sourceStageData.tasks = updatedTasks;
+		}
 
-				const new_stage = newData.stages.find((stage) => stage.stage_id === stage_id);
+		setStagesData(data);
+	}, [stagesData])
 
-				if (new_stage) {
+	const handleDrop = useCallback(({ location, source }: BaseEventPayload<ElementDragType>) => {
+		const data: StageType[] = JSON.parse(JSON.stringify(stagesData));
 
-					prev_task.stage_id = stage_id;
+		const destination = location.current.dropTargets.length
 
-					new_stage.tasks.splice(position, 0, prev_task);
+		if (!destination) return;
+
+		if (source.data.type === 'task') {
+			const draggedTaskId = source.data.task_id;
+			const sourceStageId = location.initial.dropTargets[1].data.stage_id as string;
+			const sourceStageData = data.find((stage: StageType) => stage.stage_id === sourceStageId);
+
+			if (sourceStageData) {
+				const draggedTaskIndex = sourceStageData.tasks.findIndex((task: TaskType) => task.task_id === draggedTaskId);
+
+				if (location.current.dropTargets.length === 1) {
+					const destinationStageId = location.current.dropTargets[0].data.stage_id as string;
+
+					if (sourceStageId === destinationStageId) {
+						const destinationIndex = getReorderDestinationIndex({
+							startIndex: draggedTaskIndex,
+							indexOfTarget: sourceStageData.tasks.length - 1,
+							closestEdgeOfTarget: null,
+							axis: "vertical"
+						})
+
+						reorderTask({
+							stage_id: sourceStageData.stage_id,
+							startIndex: draggedTaskIndex,
+							finishIndex: destinationIndex,
+						});
+					}
+				}
+
+				if (location.current.dropTargets.length === 2) {
+					console.log(
+						"dropTargets2",
+						location.current.dropTargets,
+						location.current.dropTargets.length
+					);
 				}
 			}
 		}
-		
-		console.log({ stages: newData.stages });
 
-		setProject(newData);
-	};
+		setStagesData(data);
+	}, [stagesData, reorderTask])
 
-	return <ProjectContext.Provider value={{ ...project, moveTask }}>{children}</ProjectContext.Provider>;
+	return <ProjectContext.Provider value={{ stagesData, handleDrop }}>{children}</ProjectContext.Provider>;
 };
 
 export default ProjectProvider;

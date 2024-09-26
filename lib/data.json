@@ -8,24 +8,28 @@
 		  {
 			"task_id": "task_1",
 			"text": "Set up project repository",
+			"position": 0,
 			"priority": "normal",
 			"stage_id": "stage_1"
 		  },
 		  {
 			"task_id": "task_2",
 			"text": "Gather project requirements",
+			"position": 1,
 			"priority": "medium",
 			"stage_id": "stage_1"
 		  },
 		  {
 			"task_id": "task_3",
 			"text": "Create project plan",
+				"position": 2,
 			"priority": "high",
 			"stage_id": "stage_1"
 		  },
 		  {
 			"task_id": "task_4",
 			"text": "Set up development environment",
+			"position": 3,
 			"priority": "urgent",
 			"stage_id": "stage_1"
 		  }
@@ -38,14 +42,16 @@
 		  {
 			"task_id": "task_6",
 			"text": "Implement user authentication",
-			"priority": "high",
-			"stage_id": "stage_2"
+				"priority": "high",
+			"stage_id": "stage_2",
+			"position": 0
 		  },
 		  {
 			"task_id": "task_7",
 			"text": "Design database schema",
 			"priority": "medium",
-			"stage_id": "stage_2"
+			"stage_id": "stage_2",
+			"position": 1
 		  }
 		]
 	  },
@@ -57,13 +63,15 @@
 			"task_id": "task_11",
 			"text": "Code review for user authentication",
 			"priority": "high",
-			"stage_id": "stage_3"
+			"stage_id": "stage_3",
+			"position": 0
 		  },
 		  {
 			"task_id": "task_12",
 			"text": "Test database migrations",
 			"priority": "medium",
-			"stage_id": "stage_3"
+			"stage_id": "stage_3",
+			"position": 1
 		  }
 		]
 	  },
@@ -75,7 +83,8 @@
 			"task_id": "task_16",
 			"text": "Finalize project documentation",
 			"priority": "normal",
-			"stage_id": "stage_4"
+			"stage_id": "stage_4",
+			"position": 0
 		  }
 		]
 	  },

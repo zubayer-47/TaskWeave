@@ -1,10 +1,10 @@
 "use client";
 
-import type { ProjectType, TaskType } from "@/types/project";
+import type { TaskType } from "@/types/project";
 import { useEffect, useRef, useState } from "react";
 import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter'
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine'
-import { useProject } from "@/context/project/ProjectProvider";
+import { attachClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge'
 
 type Props = {
 	task: TaskType;
@@ -32,7 +32,6 @@ const task_priorities: Record<string, { background: string; foreground: string }
 export default function Task({ task }: Props) {
 	const [isDragging, setIsDragging] = useState(false);
 	const ref = useRef<HTMLDivElement>(null);
-	const { moveTask } = useProject() as ProjectType;
 
 	useEffect(() => {
 		const el = ref.current;
@@ -42,23 +41,32 @@ export default function Task({ task }: Props) {
 		return combine(
 			draggable({
 				element: el,
-				getInitialData: () => task,
+				getInitialData: () => ({ type: 'task', task_id: task.task_id }),
 				onDragStart: () => setIsDragging(true),
 				onDrop: () => setIsDragging(false),
 			}),
 
 			dropTargetForElements({
 				element: el,
-				getData: () => task,
-				onDrop: ({ source, self }) => {
+				getData: ({ input, element }) => {
 
-					console.log(source.data, self.data)
+					const data = { type: 'task', task_id: task.task_id };
 
-					moveTask(source.data.task_id as string, self.data.stage_id as string, source.data.stage_id as string, self.data.position as number);
-				}
+					return attachClosestEdge(data, {
+						input,
+						element,
+						allowedEdges: ['top', 'bottom'],
+					})
+				},
+				getIsSticky: () => true,
+				onDragEnter(args) {
+					if (args.source.data.task_id !== task.task_id) {
+						console.log("onDragEnter", args)
+					}
+				},
 			})
 		)
-	}, [task, moveTask]);
+	}, [task]);
 
 	return (
 		<div

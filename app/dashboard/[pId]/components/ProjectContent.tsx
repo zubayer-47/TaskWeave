@@ -3,9 +3,17 @@
 import { ProjectType } from '@/types/project';
 import TaskStage from './partials/TaskStage';
 import { useProject } from '@/context/project/ProjectProvider';
+import { useEffect} from 'react';
+import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 
 const ProjectContent = () => {
-	const { stages } = useProject() as ProjectType;
+	const { stagesData, handleDrop } = useProject() as ProjectType;
+
+	useEffect(() => {
+		return monitorForElements({
+			onDrop: handleDrop
+		})
+	}, [stagesData, handleDrop])
 
 	return (
 		<div className='col-span-10 bg-dashboard-bg rounded-3xl h-full pb-1 pt-3'>
@@ -21,10 +29,13 @@ const ProjectContent = () => {
 			</button>
 
 			<div className='flex items-center gap-4 px-4 pb-1 dashboard-content-height w-full overflow-x-auto scrollbar-thin scrollbar-track-dark scrollbar-thumb-border'>
-				<TaskStage
-					stages={stages}
-					
-				/>
+				{stagesData.map(stage => (
+					<TaskStage
+						key={stage.stage_id}
+						{...stage}
+					/>
+				))}
+
 			</div>
 		</div>
 	);
