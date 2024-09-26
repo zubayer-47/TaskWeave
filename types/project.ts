@@ -1,8 +1,8 @@
+
 export type TaskType = {
 	task_id: string;
 	text: string;
 	priority: string;
-	position: number;
 	stage_id: string;
 };
 
@@ -12,7 +12,8 @@ export type StageType = {
 	tasks: TaskType[];
 };
 
-export type Board = {
+export type ProjectType = {
 	name: string;
 	stages: StageType[];
+	moveTask: (task_id: string, stage_id: string, prev_stage_id: string, position: number) => void;
 };

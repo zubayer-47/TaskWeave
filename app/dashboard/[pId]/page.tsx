@@ -1,8 +1,12 @@
+'use client'
+
 import Link from 'next/link';
 import ProjectContent from './components/ProjectContent';
+import ProjectProvider from '@/context/project/ProjectProvider';
 
 export default function Project() {
 	return (
+		<ProjectProvider>
 		<div className='h-screen flex flex-col gap-3 justify-center'>
 			<div className='grid grid-cols-12 gap-5'>
 				<div className='col-span-2 bg-dashboard-bg rounded-3xl h-full'>
@@ -35,7 +39,8 @@ export default function Project() {
 					</Link>
 				</div>
 				<ProjectContent />
+				</div>
 			</div>
-		</div>
+		</ProjectProvider>
 	);
 }

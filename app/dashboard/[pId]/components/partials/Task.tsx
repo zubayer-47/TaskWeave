@@ -1,10 +1,16 @@
-import type { TaskType } from "@/lib/types";
+"use client";
+
+import type { ProjectType, TaskType } from "@/types/project";
+import { useEffect, useRef, useState } from "react";
+import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter'
+import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine'
+import { useProject } from "@/context/project/ProjectProvider";
 
 type Props = {
 	task: TaskType;
 };
 
-const task_priorities = {
+const task_priorities: Record<string, { background: string; foreground: string }> = {
 	urgent: {
 		background: 'bg-rose-400',
 		foreground: 'bg-rose-600',
@@ -24,21 +30,50 @@ const task_priorities = {
 };
 
 export default function Task({ task }: Props) {
+	const [isDragging, setIsDragging] = useState(false);
+	const ref = useRef<HTMLDivElement>(null);
+	const { moveTask } = useProject() as ProjectType;
+
+	useEffect(() => {
+		const el = ref.current;
+
+		if (!el) return;
+
+		return combine(
+			draggable({
+				element: el,
+				getInitialData: () => task,
+				onDragStart: () => setIsDragging(true),
+				onDrop: () => setIsDragging(false),
+			}),
+
+			dropTargetForElements({
+				element: el,
+				getData: () => task,
+				onDrop: ({ source, self }) => {
+
+					console.log(source.data, self.data)
+
+					moveTask(source.data.task_id as string, self.data.stage_id as string, source.data.stage_id as string, self.data.position as number);
+				}
+			})
+		)
+	}, [task, moveTask]);
+
 	return (
 		<div
-			className='m-2 p-3 rounded-2xl bg-task-item-bg space-y-3 relative'
+			ref={ref}
+			className={`m-2 p-3 rounded-2xl bg-task-item-bg space-y-3 relative ${isDragging ? 'opacity-50 rotate-6' : ''}`}
 			key={task.task_id}
 		>
 			<div className='text-white/90'>{task.text}</div>
 			<div
-				className={`flex items-center gap-1.5 bg-opacity-20 w-fit px-2 py-1.5 rounded-full ${
-					task_priorities[task.priority].background
-				}`}
+				className={`flex items-center gap-1.5 bg-opacity-20 w-fit px-2 py-1.5 rounded-full ${task_priorities[task.priority].background
+					}`}
 			>
 				<span
-					className={`h-5 w-5 rounded-full inline-block ${
-						task_priorities[task.priority].foreground
-					}`}
+					className={`h-5 w-5 rounded-full inline-block ${task_priorities[task.priority].foreground
+						}`}
 				></span>
 				<span className='text-white/80 font-inter font-medium capitalize'>
 					{task.priority}
