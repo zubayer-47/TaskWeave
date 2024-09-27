@@ -15,6 +15,8 @@ const ProjectContent = () => {
 		})
 	}, [stagesData, handleDrop])
 
+	console.log(stagesData[0], "XX")
+
 	return (
 		<div className='col-span-10 bg-dashboard-bg rounded-3xl h-full pb-1 pt-3'>
 			<h1 className='px-4 pb-3 text-white text-xl font-adlam-display'>

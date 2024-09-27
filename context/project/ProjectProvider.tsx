@@ -15,7 +15,7 @@ export const useProject = () => {
 const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 	const [stagesData, setStagesData] = useState(data.stages);
 
-	const reorderTask = useCallback(({ stage_id, startIndex, finishIndex }: { stage_id: string, startIndex: number, finishIndex: number }) => {
+	const reorderTask = useCallback(({ stage_id, startIndex, finishIndex }: { stage_id: string, startIndex: number, finishIndex: number }): TaskType[] | undefined => {
 		const data: StageType[] = JSON.parse(JSON.stringify(stagesData));
 
 		const sourceStageData = data.find((stage: StageType) => stage.stage_id === stage_id);
@@ -26,12 +26,9 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 				startIndex,
 				finishIndex,
 			})
-			console.log("updatedTasks", updatedTasks);
-
-			sourceStageData.tasks = updatedTasks;
+			
+			return updatedTasks;
 		}
-
-		setStagesData(data);
 	}, [stagesData])
 
 	const handleDrop = useCallback(({ location, source }: BaseEventPayload<ElementDragType>) => {
@@ -60,11 +57,15 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 							axis: "vertical"
 						})
 
-						reorderTask({
+						const reorderedData = reorderTask({
 							stage_id: sourceStageData.stage_id,
 							startIndex: draggedTaskIndex,
 							finishIndex: destinationIndex,
 						});
+
+						if (reorderedData) {
+							sourceStageData.tasks = reorderedData
+						}						
 					}
 				}
 
@@ -77,6 +78,8 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 				}
 			}
 		}
+
+		console.log(data, "handleDrop")
 
 		setStagesData(data);
 	}, [stagesData, reorderTask])

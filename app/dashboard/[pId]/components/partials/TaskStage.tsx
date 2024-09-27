@@ -2,8 +2,9 @@
 
 import { useState, useRef, useEffect } from "react";
 import Task from "./Task";
-import type { StageType } from "@/types/project";
+import type { ProjectType, StageType } from "@/types/project";
 import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { useProject } from "@/context/project/ProjectProvider";
 
 
 type Props = StageType
@@ -18,9 +19,10 @@ const task_header_bgs: Record<string, string> = {
 
 export default function TaskStage({ name, stage_id, tasks }: Props) {
 	const [isDragging, setIsDragging] = useState(false);
+	const { stagesData } = useProject() as ProjectType;		
 	const ref = useRef<HTMLDivElement>(null);
 
-	// console.log(name, tasks)
+	console.log(stagesData[0], "YY")
 
 	useEffect(() => {
 		const el = ref.current;
