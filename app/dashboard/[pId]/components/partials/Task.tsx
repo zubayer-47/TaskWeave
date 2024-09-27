@@ -59,11 +59,11 @@ export default function Task({ task }: Props) {
 					})
 				},
 				getIsSticky: () => true,
-				onDragEnter(args) {
-					if (args.source.data.task_id !== task.task_id) {
-						console.log("onDragEnter", args)
-					}
-				},
+				// onDragEnter(args) {
+				// 	if (args.source.data.task_id !== task.task_id) {
+				// 		console.log("onDragEnter", args)
+				// 	}
+				// },
 			})
 		)
 	}, [task]);

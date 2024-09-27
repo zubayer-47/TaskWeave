@@ -16,5 +16,5 @@ export type StageType = {
 
 export type ProjectType = {
 	stagesData: StageType[];
-	handleDrop: (args: BaseEventPayload<ElementDragType>) => void,
+	handleDrop: (args: BaseEventPayload<ElementDragType>) => void
 };

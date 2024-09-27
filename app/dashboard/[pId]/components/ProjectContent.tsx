@@ -3,7 +3,7 @@
 import { ProjectType } from '@/types/project';
 import TaskStage from './partials/TaskStage';
 import { useProject } from '@/context/project/ProjectProvider';
-import { useEffect} from 'react';
+import { useEffect } from 'react';
 import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 
 const ProjectContent = () => {
@@ -14,8 +14,6 @@ const ProjectContent = () => {
 			onDrop: handleDrop
 		})
 	}, [stagesData, handleDrop])
-
-	console.log(stagesData[0], "XX")
 
 	return (
 		<div className='col-span-10 bg-dashboard-bg rounded-3xl h-full pb-1 pt-3'>

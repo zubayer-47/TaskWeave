@@ -31,10 +31,53 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 		}
 	}, [stagesData])
 
+	const moveTask = useCallback(({ movedTaskIndexInSourceStage, sourceStageId, destinationStageId, movedTaskIndexInDestinationStage }: { movedTaskIndexInSourceStage: number, sourceStageId: string, destinationStageId: string, movedTaskIndexInDestinationStage?: number }) => {
+
+		const clonedStagesData = [...stagesData];
+
+		const sourceStageData = clonedStagesData.find(stage => stage.stage_id === sourceStageId);
+
+		const destinationStageData = clonedStagesData.find(stage => stage.stage_id === destinationStageId);
+
+		if (sourceStageData && destinationStageData) {
+			const taskToMove = sourceStageData.tasks[movedTaskIndexInSourceStage]
+
+			if (taskToMove) {
+				const newSourceStageData = {
+					...sourceStageData,
+					tasks: sourceStageData.tasks.filter(task => task.task_id !== taskToMove.task_id)
+				}
+
+				const newDestinationTasks = Array.from(destinationStageData.tasks);
+
+				const newIndexInDestination = movedTaskIndexInDestinationStage ?? 0;
+
+				newDestinationTasks.splice(newIndexInDestination, 0, taskToMove);
+
+				const newDraggedStageData = {
+					...destinationStageData,
+					tasks: newDestinationTasks,
+				};
+
+				clonedStagesData.splice(clonedStagesData.indexOf(sourceStageData), 1, newSourceStageData);
+				clonedStagesData.splice(clonedStagesData.indexOf(destinationStageData), 1, newDraggedStageData);
+
+				
+			}
+		}
+
+		console.log({clonedStagesData})
+
+		setStagesData(() => clonedStagesData);
+
+	}, [stagesData, setStagesData])
+
 	const handleDrop = useCallback(({ location, source }: BaseEventPayload<ElementDragType>) => {
 		const data: StageType[] = JSON.parse(JSON.stringify(stagesData));
 
 		const destination = location.current.dropTargets.length
+
+		console.log({location, source})
 
 		if (!destination) return;
 
@@ -45,9 +88,11 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 
 			if (sourceStageData) {
 				const draggedTaskIndex = sourceStageData.tasks.findIndex((task: TaskType) => task.task_id === draggedTaskId);
+				console.log(location.current.dropTargets.length)
 
 				if (location.current.dropTargets.length === 1) {
 					const destinationStageId = location.current.dropTargets[0].data.stage_id as string;
+
 
 					if (sourceStageId === destinationStageId) {
 						const destinationIndex = getReorderDestinationIndex({
@@ -66,23 +111,32 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 						if (reorderedData) {
 							sourceStageData.tasks = reorderedData
 						}						
+					} else {
+						console.log('not same')
+						moveTask({
+							sourceStageId,
+							destinationStageId,
+							movedTaskIndexInSourceStage: draggedTaskIndex,
+						})
+
+						return
 					}
 				}
 
 				if (location.current.dropTargets.length === 2) {
-					console.log(
-						"dropTargets2",
-						location.current.dropTargets,
-						location.current.dropTargets.length
-					);
+					// console.log(
+					// 	"dropTargets2",
+					// 	location.current.dropTargets,
+					// 	location.current.dropTargets.length
+					// );
 				}
 			}
 		}
 
-		console.log(data, "handleDrop")
+		// console.log(data, "handleDrop")
 
 		setStagesData(data);
-	}, [stagesData, reorderTask])
+	}, [stagesData, reorderTask, moveTask])
 
 	return <ProjectContext.Provider value={{ stagesData, handleDrop }}>{children}</ProjectContext.Provider>;
 };
