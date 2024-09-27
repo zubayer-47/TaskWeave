@@ -1,9 +1,13 @@
-import Image from 'next/image';
-import Link from 'next/link';
+'use client'
 
-export default function Dashboard() {
+import Link from 'next/link';
+import ProjectContent from './components/ProjectContent';
+import ProjectProvider from '@/context/project/ProjectProvider';
+
+export default function Project() {
 	return (
-		<div className='h-screen flex flex-col gap-3 justify-center overflow-hidden'>
+		<ProjectProvider>
+		<div className='h-screen flex flex-col gap-3 justify-center'>
 			<div className='grid grid-cols-12 gap-5'>
 				<div className='col-span-2 bg-dashboard-bg rounded-3xl h-full'>
 					<h1 className='px-4 py-3 text-white text-xl font-adlam-display'>
@@ -34,21 +38,9 @@ export default function Dashboard() {
 						<h2 className='text-white font-inter font-semibold'>OpWeave</h2>
 					</Link>
 				</div>
-				<div className='col-span-10 bg-dashboard-bg rounded-3xl h-full pb-2 pt-3'>
-					<h1 className='text-5xl py-5 text-center text-primary-foreground font-adlam-display'>
-						Welcome To TaskWeave Dashboard
-					</h1>
-					<div className='dashboard-content-height flex justify-center items-center overflow-hidden'>
-						<Image
-							src='/welcome_dashboard.png'
-							width={400}
-							height={452.67}
-							alt='Dashboard Feature Image'
-							priority
-						/>
-					</div>
+				<ProjectContent />
 				</div>
 			</div>
-		</div>
+		</ProjectProvider>
 	);
 }

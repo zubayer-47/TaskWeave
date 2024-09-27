@@ -29,6 +29,8 @@ const config: Config = {
 				'success-button': 'rgb(var(--success-button) / <alpha-value>)',
 				'task-stage-warning': 'rgb(var(--task-stage-warning) / <alpha-value>)',
 				'task-stage-slate': 'rgb(var(--task-stage-slate) / <alpha-value>)',
+				'task-priority-urgent':
+					'rgb(var(--task-priority-urgent) / <alpha-value>)',
 			},
 			fontFamily: {
 				inter: ['var(--font-inter)'],
