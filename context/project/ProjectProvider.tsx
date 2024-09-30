@@ -5,6 +5,7 @@ import { BaseEventPayload, ElementDragType } from '@atlaskit/pragmatic-drag-and-
 import { getReorderDestinationIndex } from '@atlaskit/pragmatic-drag-and-drop-hitbox/util/get-reorder-destination-index'
 import { reorder } from '@atlaskit/pragmatic-drag-and-drop/reorder'
 import data from "@/lib/data.json";
+import { extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
 
 const ProjectContext = createContext<ProjectType | null>(null);
 
@@ -26,7 +27,7 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 				startIndex,
 				finishIndex,
 			})
-			
+
 			return updatedTasks;
 		}
 	}, [stagesData])
@@ -50,7 +51,9 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 
 				const newDestinationTasks = Array.from(destinationStageData.tasks);
 
-				const newIndexInDestination = movedTaskIndexInDestinationStage ?? 0;
+				const newIndexInDestination = movedTaskIndexInDestinationStage ?? newDestinationTasks.length;
+
+				console.log({newIndexInDestination})
 
 				newDestinationTasks.splice(newIndexInDestination, 0, taskToMove);
 
@@ -62,11 +65,11 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 				clonedStagesData.splice(clonedStagesData.indexOf(sourceStageData), 1, newSourceStageData);
 				clonedStagesData.splice(clonedStagesData.indexOf(destinationStageData), 1, newDraggedStageData);
 
-				
+
 			}
 		}
 
-		console.log({clonedStagesData})
+		console.log({ clonedStagesData })
 
 		setStagesData(() => clonedStagesData);
 
@@ -77,7 +80,7 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 
 		const destination = location.current.dropTargets.length
 
-		console.log({location, source})
+		console.log({ location, source })
 
 		if (!destination) return;
 
@@ -110,9 +113,8 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 
 						if (reorderedData) {
 							sourceStageData.tasks = reorderedData
-						}						
+						}
 					} else {
-						console.log('not same')
 						moveTask({
 							sourceStageId,
 							destinationStageId,
@@ -124,11 +126,51 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 				}
 
 				if (location.current.dropTargets.length === 2) {
-					// console.log(
-					// 	"dropTargets2",
-					// 	location.current.dropTargets,
-					// 	location.current.dropTargets.length
-					// );
+					const [destinationTask, destinationStage] = location.current.dropTargets;
+					const destinationStageId = destinationStage.data.stage_id as string;
+
+					const destinationStageData = data.find((stage: StageType) => stage.stage_id === destinationStageId);
+
+					if (destinationStageData) {
+						const targetedTaskIndex = destinationStageData.tasks.findIndex((task: TaskType) => task.task_id === destinationTask.data.task_id);
+
+						if (targetedTaskIndex !== -1) {
+							const closestEdgeOfTarget = extractClosestEdge(destinationTask.data)
+
+							if (sourceStageId === destinationStageId) {
+								const destinationIndex = getReorderDestinationIndex({
+									startIndex: draggedTaskIndex,
+									indexOfTarget: targetedTaskIndex,
+									closestEdgeOfTarget,
+									axis: "vertical",
+								});
+
+								const updatedTasks = reorderTask({
+									stage_id: sourceStageId,
+									startIndex: draggedTaskIndex,
+									finishIndex: destinationIndex,
+								});
+
+								if (updatedTasks) {
+									destinationStageData.tasks = updatedTasks
+								}
+							} else {
+								const destinationIndex =
+									closestEdgeOfTarget === "bottom"
+										? targetedTaskIndex + 1
+										: targetedTaskIndex;
+
+								moveTask({
+									movedTaskIndexInSourceStage: draggedTaskIndex,
+									sourceStageId,
+									destinationStageId,
+									movedTaskIndexInDestinationStage: destinationIndex,
+								});
+
+								return
+							}
+						}
+					}
 				}
 			}
 		}

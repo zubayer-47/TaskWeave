@@ -11,7 +11,7 @@ const ProjectContent = () => {
 
 	useEffect(() => {
 		return monitorForElements({
-			onDrop: handleDrop
+			onDrop: handleDrop,
 		})
 	}, [stagesData, handleDrop])
 

@@ -4,7 +4,8 @@ import type { TaskType } from "@/types/project";
 import { useEffect, useRef, useState } from "react";
 import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter'
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine'
-import { attachClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge'
+import { attachClosestEdge, extractClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge'
+import DropIndicator from "../DropIndicator";
 
 type Props = {
 	task: TaskType;
@@ -31,6 +32,7 @@ const task_priorities: Record<string, { background: string; foreground: string }
 
 export default function Task({ task }: Props) {
 	const [isDragging, setIsDragging] = useState(false);
+	const [closestEdge, setClosestEdge] = useState<string | null>(null);
 	const ref = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -59,11 +61,26 @@ export default function Task({ task }: Props) {
 					})
 				},
 				getIsSticky: () => true,
-				// onDragEnter(args) {
-				// 	if (args.source.data.task_id !== task.task_id) {
-				// 		console.log("onDragEnter", args)
-				// 	}
-				// },
+				onDragEnter(args) {
+					if (args.source.data.task_id !== task.task_id) {
+						setClosestEdge(extractClosestEdge(args.self.data));
+					}
+				},
+
+				onDrag(args) {
+					if (args.source.data.task_id !== task.task_id) {
+
+						setClosestEdge(extractClosestEdge(args.self.data));
+					}
+				},
+
+				onDragLeave: () => {
+					setClosestEdge(null);
+				},
+
+				onDrop: () => {
+					setClosestEdge(null);
+				},
 			})
 		)
 	}, [task]);
@@ -71,7 +88,7 @@ export default function Task({ task }: Props) {
 	return (
 		<div
 			ref={ref}
-			className={`m-2 p-3 rounded-2xl bg-task-item-bg space-y-3 relative ${isDragging ? 'opacity-50 rotate-6' : ''}`}
+			className={`m-2 p-3 rounded-2xl bg-task-item-bg space-y-3 relative ${isDragging ? 'opacity-50' : ''}`}
 			key={task.task_id}
 		>
 			<div className='text-white/90'>{task.text}</div>
@@ -108,6 +125,8 @@ export default function Task({ task }: Props) {
 					</svg>
 				</button>
 			</div>
+
+			{closestEdge && <DropIndicator edge={closestEdge as "top" | "bottom"} gap='1rem' />}
 		</div>
 	);
 }
