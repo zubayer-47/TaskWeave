@@ -20,7 +20,6 @@ export default function TaskStage({ name, stage_id, tasks }: Props) {
 	const [isDragging, setIsDragging] = useState(false);
 	const ref = useRef<HTMLDivElement>(null);
 
-
 	useEffect(() => {
 		const el = ref.current;
 		if (!el) return;

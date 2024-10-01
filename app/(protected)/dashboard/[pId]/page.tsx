@@ -5,6 +5,7 @@ import ProjectContent from './components/ProjectContent';
 import ProjectProvider from '@/context/project/ProjectProvider';
 
 export default function Project() {
+
 	return (
 		<ProjectProvider>
 		<div className='h-screen flex flex-col gap-3 justify-center'>

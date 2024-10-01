@@ -16,7 +16,7 @@ export default function Home() {
       </div>
 
       <Link
-        href="/auth"
+        href="/login"
         className="bg-primary-foreground hover:bg-primary-foreground/70 transition-colors px-5 py-3 rounded-lg text-gray-50 font-adlam-display text-xl mb-5"
       >
         Get Started

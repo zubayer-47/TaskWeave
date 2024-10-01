@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, ADLaM_Display } from "next/font/google";
 import "@/styles/globals.css";
+import { AuthProvider } from "@/context/auth/AuthProvider";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default function FreeLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -31,7 +33,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`light-bg ${adlam_display.variable}`}>
       <body className={`h-full w-full antialiased ${inter.className}`}>
-        <main>{children}</main>
+        <AuthProvider>
+          <main>{children}</main>
+        </AuthProvider>
+
+        <Toaster />
       </body>
     </html>
   );
