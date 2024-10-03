@@ -11,7 +11,7 @@ type Props = StageType
 const task_header_bgs: Record<string, string> = {
 	'Ready to Start': 'bg-primary-foreground',
 	'In Progress': 'bg-task-stage-warning',
-	'Completed': 'bg-success-button',
+	'Done': 'bg-success-button',
 	'Review': 'bg-task-stage-slate',
 	"Stuck": 'bg-rose-500',
 };

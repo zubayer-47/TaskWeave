@@ -5,9 +5,39 @@ import TaskStage from './partials/TaskStage';
 import { useProject } from '@/context/project/ProjectProvider';
 import { useEffect } from 'react';
 import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+// import app from '@/lib/firebase/config';
+// import { collection, getDocs, getFirestore } from 'firebase/firestore';
 
 const ProjectContent = () => {
 	const { stagesData, handleDrop } = useProject() as ProjectType;
+	// const [projectData, setProjectData] = useState<ProjectType | null>(null)
+	
+	// useEffect(() => {
+	// 	const getData = async () => {
+	// 		const fireStore = getFirestore(app)
+	// 		// const docRef = doc(fireStore, 'projects', 'test')
+
+	// 		const collectionRef = collection(fireStore, 'projects')
+	// 		const querySnapshot = await getDocs(collectionRef);
+	// 		// querySnapshot.forEach((doc) => {
+	// 		// 	console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+	// 		// });
+
+	// 		console.log(querySnapshot.docs[1].id)
+
+	// 		// const docSnap = await getDoc(docRef)
+	// 		// console.log({ docRef, docSnap })
+	// 		// if (docSnap.exists()) {
+	// 		// 	// setProjectData(docSnap.data() as ProjectType)
+
+	// 		// 	console.log(docSnap.data())
+	// 		// } else {
+	// 		// 	console.log('No such document!')
+	// 		// }
+	// 	}
+
+	// 	getData()
+	// }, [])
 
 	useEffect(() => {
 		return monitorForElements({

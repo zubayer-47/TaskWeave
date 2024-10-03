@@ -4,7 +4,7 @@ import { createContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import type { UserInfo } from 'firebase/auth';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'firebase/auth';
-import app from '@/lib/firebase/config';
+import {app} from '@/lib/firebase/config';
 import toast from 'react-hot-toast';
 
 interface AuthContextType {
@@ -29,8 +29,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             setLoading(false)
         })
 
+        console.log({ user })
+
         return () => unsubscribe()
-    }, [])
+    }, [user])
 
     const login = async (email: string, password: string) => {
         try {

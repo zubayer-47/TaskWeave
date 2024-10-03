@@ -17,6 +17,12 @@
     }
 }
 
+@layer components {
+    .button {
+        @apply bg-success-button hover:bg-success-button/80 transition-colors px-2.5 py-1 rounded-md text-white font-inter font-semibold;
+    }
+}
+
 .light-bg {
     background: linear-gradient(180deg, #f1f8ff 38%, #b4d6ff 100%);
 }
