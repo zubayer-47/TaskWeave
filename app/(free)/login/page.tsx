@@ -4,7 +4,7 @@ import LoadingSpinner from '@/components/loader/LoadingSpinner';
 import useAuth from '@/hooks/useAuth';
 import Link from 'next/link';
 
-export default function Login() {
+function Login() {
 	const { login, loading } = useAuth();
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -62,3 +62,5 @@ export default function Login() {
 		</>
 	);
 }
+
+export default Login

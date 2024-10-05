@@ -23,16 +23,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true)
         const auth = getAuth(app)
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setUser(user)
+
+            router.push('/dashboard');
+
             setLoading(false)
         })
 
-        console.log({ user })
-
         return () => unsubscribe()
-    }, [user])
+    }, [user, router])
 
     const login = async (email: string, password: string) => {
         try {

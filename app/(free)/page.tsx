@@ -1,7 +1,9 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+function Home() {
   return (
     <div className="flex flex-col gap-7 justify-center items-center h-screen select-none">
       <div className="text-center space-y-2">
@@ -49,3 +51,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home

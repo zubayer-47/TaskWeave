@@ -5,7 +5,7 @@ import Input from '@/components/Input';
 import Link from 'next/link';
 import LoadingSpinner from '@/components/loader/LoadingSpinner';
 
-export default function Register() {
+function Register() {
     const { register, loading } = useAuth();
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -19,8 +19,6 @@ export default function Register() {
 
         register(data.email as string, data.password as string, data.fullname as string);
     };
-
-    console.log({loading})
 
     return (
         <>
@@ -68,3 +66,5 @@ export default function Register() {
         </>
     );
 }
+
+export default Register

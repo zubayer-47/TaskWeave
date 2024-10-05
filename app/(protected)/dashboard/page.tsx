@@ -1,8 +1,10 @@
+"use client"
+
 import CreateProject from '@/components/CreateProject';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Dashboard() {
+function Dashboard() {
 	return (
 		<div className='flex flex-col justify-center px-4'>
 			<div className='grid grid-cols-12 gap-5'>
@@ -55,3 +57,5 @@ export default function Dashboard() {
 		</div>
 	);
 }
+
+export default Dashboard

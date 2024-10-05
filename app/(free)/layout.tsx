@@ -30,6 +30,7 @@ export default function FreeLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en" className={`light-bg ${adlam_display.variable}`}>
       <body className={`h-full w-full antialiased ${inter.className}`}>

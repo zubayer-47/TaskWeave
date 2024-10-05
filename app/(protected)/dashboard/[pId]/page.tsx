@@ -5,11 +5,23 @@ import ProjectContent from './components/ProjectContent';
 import ProjectProvider from '@/context/project/ProjectProvider';
 import { usePathname } from 'next/navigation';
 import CreateProject from '@/components/CreateProject';
+import { useEffect } from 'react';
+import useAuth from '@/hooks/useAuth';
 
-export default function Project() {
+function Project() {
 	const pathname = usePathname()
+	const { user } = useAuth()
 
 	const isOpen = !!pathname.endsWith('/opweave')
+
+	useEffect(() => {
+		console.log('mounted', user)
+
+		return () => {
+			console.log('unmounted', user)
+		}
+	}, [user])
+
 	return (
 		<ProjectProvider>
 			<div className='flex flex-col gap-3 justify-center px-4'>
@@ -50,3 +62,5 @@ export default function Project() {
 		</ProjectProvider>
 	);
 }
+
+export default Project
