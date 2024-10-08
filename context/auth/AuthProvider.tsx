@@ -19,6 +19,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter()
+    // const pathname = usePathname()
     const [user, setUser] = useState<UserInfo | null>(null);
     const [loading, setLoading] = useState(false);
 
@@ -27,8 +28,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const auth = getAuth(app)
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setUser(user)
-
-            router.push('/dashboard');
 
             setLoading(false)
         })
