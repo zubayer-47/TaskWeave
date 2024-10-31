@@ -1,31 +1,27 @@
-import { HTMLInputAutoCompleteAttribute, useState } from "react";
+import { useState } from "react";
 
 type Props = {
   id: string;
   label: string;
-  required?: boolean;
-  placeholder?: string;
-  type?: "text" | "email" | "password" | "date";
+  required: boolean;
+  children?: React.ReactNode;
   error?: string;
   name?: string;
   disabled?: boolean;
-  autoComplete?: HTMLInputAutoCompleteAttribute;
 };
 
-export default function Input({
+export default function Select({
   id,
   label,
-  placeholder,
   required,
-  type = "text",
+  children,
   error,
   name,
   disabled,
-  autoComplete,
 }: Props) {
   const [value, setValue] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setValue(e.target.value);
   };
 
@@ -34,18 +30,17 @@ export default function Input({
       <label htmlFor={id} className="label">
         {label}
       </label>
-      <input
-        type={type}
+      <select
         id={id}
         name={name}
         value={value}
         onChange={handleChange}
         required={required}
         disabled={disabled}
-        autoComplete={autoComplete}
         className="input"
-        placeholder={placeholder}
-      />
+      >
+        {children}
+      </select>
 
       {error && <p className="error">{error}</p>}
     </div>

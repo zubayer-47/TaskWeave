@@ -1,0 +1,58 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can access their own profile document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // User-assigned projects - users can read/write their assigned projects
+      match /projects/{project_id} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Projects - Only the project owner can write, but project members can read
+    match /projects/{projectId} {
+      allow read: if isProjectMember(projectId);
+      allow write: if isProjectOwner(projectId);
+
+      // Roles subcollection - manage roles for each project
+      match /roles/{role_id} {
+        allow read: if isProjectMember(projectId);
+        allow write: if isProjectOwner(projectId);
+      }
+
+      match /stages/{stage_id} {
+        allow read: if isProjectMember(projectId);
+        allow write: if isProjectOwner(projectId);
+      }
+
+      match /tasks/{task_id} {
+        allow read: if isProjectMember(projectId);
+        allow write, update, delete: if isProjectOwner(projectId) || isProjectManager(projectId) || isProjectDeveloper(projectId);
+      }
+    }
+
+    // User-assigned projects - users can read/write their assigned projects
+  // match /users/{user_id}/projects/{project_id} {
+    //   allow read, write: if request.auth != null && request.auth.uid == user_id;
+    // }
+
+    // Custom functions
+    function isProjectMember(project_id) {
+      return exists(/databases/$(database)/documents/projects/$(project_id)/roles/$(request.auth.uid));
+    }
+
+    function isProjectOwner(project_id) {
+      return get(/databases/$(database)/documents/projects/$(project_id)).data.owner_id == request.auth.uid;
+    }
+
+    function isProjectManager(project_id) {
+      return get(/databases/$(database)/documents/projects/$(project_id)/roles/$(request.auth.uid)).data.role == "project_manager";
+    }
+
+    function isProjectDeveloper(project_id) {
+      return get(/databases/$(database)/documents/projects/$(project_id)/roles/$(request.auth.uid)).data.role == "developer";
+    }
+  }
+}

@@ -1,10 +1,9 @@
-"use client";
+import Input from "@/components/Input";
+import Select from "@/components/Select";
 import { CircleX } from "lucide-react";
 import { useRef } from "react";
-import Input from "./Input";
-import Select from "./Select";
 
-export default function CreateProject() {
+export default function CreateTaskButton() {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleOpen = () => {
@@ -24,33 +23,17 @@ export default function CreateProject() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target as HTMLFormElement);
-
-    const projectName = formData.get("projectName") as string;
-    const stage = formData.get("stage") as string;
-    const date = formData.get("date") as string;
-    const priority = formData.get("priority") as string;
-
-    if (projectName && stage && date && priority) {
-      console.log("Project created successfully");
-      // TODO: Create project
-      if (modalRef.current) {
-        modalRef.current.style.visibility = "hidden";
-        modalRef.current.style.opacity = "0";
-      }
-    }
+    // new FormData(e.target as HTMLFormElement);
   };
 
   return (
-    <div className="flex w-full items-center justify-between gap-3 px-2 py-3">
-      <input
-        type="text"
-        placeholder="Search"
-        className="w-full rounded-md border border-border bg-dashboard-bg px-2 py-1 font-inter font-semibold text-white focus:outline-none"
-      />
-
-      <button type="button" onClick={handleOpen} className="button">
-        +
+    <>
+      <button
+        type="button"
+        onClick={handleOpen}
+        className="mx-4 my-2 rounded-md bg-success-button p-2 font-inter font-semibold text-white transition-colors hover:bg-success-button/80"
+      >
+        Create Task
       </button>
 
       <div
@@ -108,6 +91,6 @@ export default function CreateProject() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
