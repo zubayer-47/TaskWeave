@@ -48,7 +48,7 @@
 }
 
 .dashboard-content-height {
-  height: calc(100vh - theme(spacing.48));
+  height: calc(100vh - theme(spacing.60));
 }
 
 /* loader start */
