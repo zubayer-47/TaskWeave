@@ -47,9 +47,9 @@
   background: linear-gradient(180deg, #f1f8ff 38%, #b4d6ff 100%);
 }
 
-.dashboard-content-height {
-  height: calc(100vh - theme(spacing.60));
-}
+/* .dashboard-content-height {
+  height: calc(100vh - theme(spacing.64));
+} */
 
 /* loader start */
 .loader {
