@@ -1,11 +1,16 @@
 import taskWeaveLogo from "@/public/task-weave-logo.png";
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import CreateProject from "./CreateProject";
 
 export default function Sidebar() {
+  const pathname = usePathname();
+  const isOpen = !!pathname.endsWith("/opweave");
+
   return (
-    <div className="fixed z-30 flex h-full w-64 flex-col gap-2 overflow-y-auto bg-dashboard-bg transition-all duration-300">
+    <aside className="fixed z-30 flex h-full w-64 flex-col gap-2 overflow-y-auto bg-dashboard-bg transition-all duration-300">
       <Link
         href="/"
         className="flex h-16 w-full flex-col items-center justify-center border-b border-border"
@@ -76,7 +81,12 @@ export default function Sidebar() {
 
         <Link
           href="/dashboard/opweave"
-          className="flex items-center gap-2 px-4 py-3 transition-colors hover:bg-border/30"
+          className={clsx(
+            "flex items-center gap-2 px-4 py-3 transition-colors hover:bg-border/30",
+            {
+              "bg-primary-foreground": isOpen,
+            },
+          )}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -97,6 +107,6 @@ export default function Sidebar() {
           <h2 className="font-inter font-semibold text-white">OpWeave</h2>
         </Link>
       </div>
-    </div>
+    </aside>
   );
 }

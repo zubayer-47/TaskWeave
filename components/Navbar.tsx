@@ -26,7 +26,7 @@ export default function Navbar() {
 
       <div
         className={clsx(
-          "absolute right-0 z-10 w-56 origin-top-right rounded-md bg-slate-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none",
+          "absolute right-3 top-16 z-10 w-56 origin-top-right rounded-md bg-slate-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none",
           {
             "animate-in opacity-100": menu,
             "hidden animate-out opacity-0": !menu,
