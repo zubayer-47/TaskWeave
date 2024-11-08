@@ -1,53 +1,16 @@
-import app from '@/lib/firebase/config';
-import {
-	createUserWithEmailAndPassword,
-	getAuth,
-	signInWithEmailAndPassword,
-} from 'firebase/auth';
+"use client"
 
-const auth = getAuth(app);
+import { AuthContext } from '@/context/auth/AuthProvider';
+import { useContext } from 'react';
 
-export default function useAuth() {
-	const signup = async (
-		email: FormDataEntryValue,
-		password: FormDataEntryValue
-	) => {
-		let result, error;
+const useAuth = () => {
+	const context = useContext(AuthContext);
 
-		try {
-			result = await createUserWithEmailAndPassword(
-				auth,
-				email as string,
-				password as string
-			);
-		} catch (err) {
-			error = err;
-		}
+	if (!context) {
+		throw new Error('useAuth must be used within an AuthProvider');
+	}
 
-		return { result, error };
-	};
+	return context;
+};
 
-	// sign in method with email and password through firebase
-	const signin = async (
-		email: FormDataEntryValue,
-		password: FormDataEntryValue
-	) => {
-		let result, error;
-
-		console.log({ auth });
-
-		try {
-			result = await signInWithEmailAndPassword(
-				auth,
-				email as string,
-				password as string
-			);
-		} catch (err) {
-			error = err;
-		}
-
-		return { result, error };
-	};
-
-	return { signin, signup };
-}
+export default useAuth;

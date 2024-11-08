@@ -1,6 +1,9 @@
-import type { Metadata } from "next";
-import { Inter, ADLaM_Display } from "next/font/google";
+import { AuthProvider } from "@/context/auth/AuthProvider";
+import React from "react";
+
 import "@/styles/globals.css";
+import type { Metadata } from "next";
+import { ADLaM_Display, Inter } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,16 +26,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en" className={`light-bg ${adlam_display.variable}`}>
-      <body className={`h-full w-full antialiased ${inter.className}`}>
-        <main>{children}</main>
+      <body className={`h-screen w-full antialiased ${inter.className}`}>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
 }
+
+export default RootLayout;

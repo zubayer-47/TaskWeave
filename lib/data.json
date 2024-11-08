@@ -1,5 +1,6 @@
 {
 	"name": "OpWeave",
+	"project_id": "project_1",
 	"stages": [
 	  {
 		"stage_id": "stage_1",
@@ -94,4 +95,4 @@
 		"tasks": []
 	  }
 	]
-  }
+}
