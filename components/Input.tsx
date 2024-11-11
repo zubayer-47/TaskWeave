@@ -3,11 +3,11 @@ import { HTMLInputAutoCompleteAttribute, useState } from "react";
 type Props = {
   id: string;
   label: string;
+  name: string;
   required?: boolean;
   placeholder?: string;
   type?: "text" | "email" | "password" | "date";
   error?: string;
-  name?: string;
   disabled?: boolean;
   autoComplete?: HTMLInputAutoCompleteAttribute;
 };

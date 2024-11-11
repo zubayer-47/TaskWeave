@@ -18,7 +18,7 @@ function Home() {
       </div>
 
       <Link
-        href="/dashboard"
+        href="/login"
         className="mb-5 rounded-lg bg-primary-foreground px-5 py-3 font-adlam-display text-xl text-gray-50 transition-colors hover:bg-primary-foreground/70"
       >
         Get Started

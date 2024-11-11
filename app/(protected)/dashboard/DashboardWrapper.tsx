@@ -1,20 +1,29 @@
-import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
+"use client";
 
-export default function DashboardWrapper({
+import isAuth from "@/components/isAuth";
+import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/sidebar/Sidebar";
+import ProjectProvider from "@/context/project/ProjectProvider";
+
+function DashboardWrapperComponent({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen bg-dark">
-      <Sidebar />
+    <ProjectProvider>
+      <div className="flex min-h-screen bg-dark">
+        <Sidebar />
 
-      <div className="flex w-full flex-col md:pl-64">
-        <Navbar />
+        <div className="flex w-full flex-col md:pl-64">
+          <Navbar />
 
-        {children}
+          {children}
+        </div>
       </div>
-    </div>
+    </ProjectProvider>
   );
 }
+const DashboardWrapper = isAuth(DashboardWrapperComponent);
+
+export default DashboardWrapper;

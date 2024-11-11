@@ -2,33 +2,31 @@
 
 import Input from "@/components/Input";
 import LoadingSpinner from "@/components/loader/LoadingSpinner";
-import useAuth from "@/hooks/useAuth";
 import Link from "next/link";
 
 function Register() {
-  const { register, loading } = useAuth();
-
+  const loading = false;
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const data = {
-      email: formData.get("email"),
-      password: formData.get("password"),
-      fullname: formData.get("fullname"),
-    };
+    // const formData = new FormData(e.target as HTMLFormElement);
+    // const data = {
+    //   email: formData.get("email"),
+    //   password: formData.get("password"),
+    //   fullname: formData.get("fullname"),
+    // };
 
-    register(
-      data.email as string,
-      data.password as string,
-      data.fullname as string,
-    );
+    // register(
+    //   data.email as string,
+    //   data.password as string,
+    //   data.fullname as string,
+    // );
   };
 
   return (
     <>
       {loading && <LoadingSpinner />}
 
-      <div className="flex h-screen select-none flex-col items-center justify-center gap-7 pb-20">
+      <div className="flex h-screen flex-col items-center justify-center gap-7 pb-20">
         <div className="space-y-2 text-center">
           <h1 className="font-adlam-display text-6xl text-primary-foreground">
             Sign Up
@@ -45,6 +43,7 @@ function Register() {
               label="Full Name"
               name="fullname"
               type="text"
+              required
               placeholder="your fullname"
             />
             <Input
@@ -52,6 +51,7 @@ function Register() {
               label="Email"
               name="email"
               type="email"
+              required
               placeholder="your email"
             />
             <Input
@@ -59,6 +59,7 @@ function Register() {
               label="Password"
               name="password"
               type="password"
+              required
               placeholder="your password"
             />
 
