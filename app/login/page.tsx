@@ -1,7 +1,6 @@
 "use client";
 
 import Input from "@/components/Input";
-import LoadingSpinner from "@/components/loader/LoadingSpinner";
 import { useLoginMutation } from "@/lib/auth/authApi";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -11,7 +10,6 @@ function Login() {
   const [login] = useLoginMutation();
   const router = useRouter();
 
-  const loading = false;
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -35,6 +33,7 @@ function Login() {
           color: "#fff",
         },
       });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if ("data" in error) {
         if ("message" in error.data) {
@@ -51,13 +50,9 @@ function Login() {
 
   return (
     <>
-      {loading && <LoadingSpinner />}
-
       <div className="flex h-screen flex-col items-center justify-center gap-7 pb-20">
         <div className="space-y-2 text-center">
-          <h1 className="font-adlam-display text-6xl text-primary-foreground">
-            Sign In
-          </h1>
+          <h1 className="title">Sign In</h1>
 
           <h3 className="font-adlam-display text-xl">
             Authenticate to manage your project efficiently

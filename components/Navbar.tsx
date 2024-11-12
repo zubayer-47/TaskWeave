@@ -1,5 +1,8 @@
 "use client";
 
+import { authApi } from "@/lib/auth/authApi";
+import { userLoggedOut } from "@/lib/auth/authSlice";
+import { useAppDispatch } from "@/lib/hooks";
 import zubayerLogo from "@/public/zubayer.jpg";
 import clsx from "clsx";
 import Image from "next/image";
@@ -8,9 +11,19 @@ import { useState } from "react";
 
 export default function Navbar() {
   const [menu, setMenu] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleUserMenu = () => {
     setMenu((prev) => !prev);
+  };
+
+  const handleLogout = () => {
+    // if logout api is not works (it'll removed in future)
+    dispatch(userLoggedOut());
+    localStorage.clear();
+
+    // if logout api works
+    dispatch(authApi.endpoints.logout.initiate());
   };
 
   return (
@@ -72,6 +85,7 @@ export default function Navbar() {
               role="menuitem"
               tabIndex={-1}
               id="menu-item-3"
+              onClick={handleLogout}
             >
               Sign out
             </button>

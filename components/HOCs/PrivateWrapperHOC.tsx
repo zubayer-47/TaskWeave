@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { useAppSelector } from "@/lib/hooks";
@@ -15,12 +15,18 @@ const privateWrapperHOC = <P extends DefaultProps>(
   return function PrivateWrapperHOCComponent(props: P) {
     const user = useAppSelector((state) => state.auth.user);
     const router = useRouter();
+    const pathname = usePathname();
 
     useEffect(() => {
       if (!user) {
-        router.push("/login");
+        if (pathname.startsWith("/dashboard")) {
+          router.push("/login");
+          return;
+        }
+
+        router.push(pathname);
       }
-    }, [user, router]);
+    }, [user, router, pathname]);
 
     return <Component {...props} />;
   };
