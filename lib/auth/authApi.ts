@@ -1,3 +1,5 @@
+"use client";
+
 import { apiService } from "../api/apiServices";
 import { updateUser, userLoggedIn, userLoggedOut } from "./authSlice";
 import { LoginParams, RegisterParams, User, UserAuthRes } from "./types";
@@ -15,11 +17,12 @@ export const authApi = apiService.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
 
-          localStorage.setItem("token", JSON.stringify(data.access_token));
-
+          if (typeof window !== "undefined") {
+            localStorage.setItem("token", JSON.stringify(data.access_token));
+          }
           dispatch(userLoggedIn(data));
         } catch (error) {
-          console.log(error, "login");
+          console.log(error, "loginApi");
         }
       },
     }),
@@ -35,11 +38,12 @@ export const authApi = apiService.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
 
-          localStorage.setItem("token", JSON.stringify(data.access_token));
-
+          if (typeof window !== "undefined") {
+            localStorage.setItem("token", JSON.stringify(data.access_token));
+          }
           dispatch(userLoggedIn(data));
         } catch (error) {
-          console.log(error, "login");
+          console.log(error, "registerApi");
         }
       },
     }),
@@ -53,10 +57,12 @@ export const authApi = apiService.injectEndpoints({
         try {
           await queryFulfilled;
 
-          localStorage.removeItem("token");
+          if (typeof window !== "undefined") {
+            localStorage.removeItem("token");
+          }
           dispatch(userLoggedOut());
         } catch (error) {
-          console.log(error, "logout");
+          console.log(error, "logoutApi");
         }
       },
     }),
@@ -70,18 +76,20 @@ export const authApi = apiService.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
 
-          const access_token = localStorage.getItem("token");
+          if (typeof window !== "undefined") {
+            const access_token = localStorage.getItem("token");
 
-          dispatch(
-            updateUser({
-              user: {
-                ...data,
-              },
-              access_token,
-            }),
-          );
+            dispatch(
+              updateUser({
+                user: {
+                  ...data,
+                },
+                access_token,
+              }),
+            );
+          }
         } catch (error) {
-          console.log(error, "profile");
+          console.log(error, "profileApi");
         }
       },
     }),

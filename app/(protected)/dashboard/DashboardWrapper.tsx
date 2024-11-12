@@ -1,15 +1,17 @@
 "use client";
 
-import isAuth from "@/components/isAuth";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/sidebar/Sidebar";
 import ProjectProvider from "@/context/project/ProjectProvider";
+import { useAppSelector } from "@/lib/hooks";
+import { useEffect } from "react";
 
-function DashboardWrapperComponent({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function DashboardWrapper({ children }: { children: React.ReactNode }) {
+  const user = useAppSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    console.log({ user }, "DashboardWrapper");
+  }, [user]);
   return (
     <ProjectProvider>
       <div className="flex min-h-screen bg-dark">
@@ -24,6 +26,6 @@ function DashboardWrapperComponent({
     </ProjectProvider>
   );
 }
-const DashboardWrapper = isAuth(DashboardWrapperComponent);
+// const DashboardWrapper = privateWrapperHOC(DashboardWrapperComponent);
 
 export default DashboardWrapper;

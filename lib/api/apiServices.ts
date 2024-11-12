@@ -7,9 +7,12 @@ const baseQuery = fetchBaseQuery({
   baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/api/v1`,
   prepareHeaders: async (headers, { getState }) => {
     const access_token = (getState() as RootState).auth.access_token;
-    const token = JSON.parse(localStorage.getItem("token") || "{}");
 
-    headers.set("Authorization", access_token ?? token);
+    if (typeof window !== "undefined") {
+      const token = JSON.parse(localStorage.getItem("token") || "{}");
+
+      headers.set("Authorization", access_token ?? token);
+    }
 
     return headers;
   },
@@ -37,7 +40,10 @@ export const apiService = createApi({
       // if (result?.error?.status === 401 || result.error?.status === 404) {
       if (result?.error?.status === 401 || result?.error?.status === 403) {
         api.dispatch(userLoggedOut());
-        localStorage.clear();
+
+        if (typeof window !== "undefined") {
+          localStorage.clear();
+        }
       }
     }
 

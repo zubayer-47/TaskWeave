@@ -3,9 +3,9 @@ import React from "react";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { ADLaM_Display, Inter } from "next/font/google";
-import StoreProvider from "./StoreProvider";
-
 import { Toaster } from "react-hot-toast";
+import PublicRouteWrapper from "./PublicRouteWrapper";
+import StoreProvider from "./StoreProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,12 +33,17 @@ function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log("loading root layout");
   return (
     <html lang="en" className={`light-bg ${adlam_display.variable}`}>
       <body className={`h-screen w-full antialiased ${inter.className}`}>
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <PublicRouteWrapper>
+            {children}
 
-        <Toaster position="top-center" />
+            <Toaster position="top-center" />
+          </PublicRouteWrapper>
+        </StoreProvider>
       </body>
     </html>
   );
