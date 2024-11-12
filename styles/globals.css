@@ -22,24 +22,28 @@
     @apply rounded-md bg-success-button px-2.5 py-1 font-inter font-semibold text-white transition-colors hover:bg-success-button/80;
   }
 
-  .edge-top {
-    @apply mt-2 border-2 border-t border-primary-foreground;
-  }
-
   .edge-bottom {
     @apply mt-2 border-2 border-b border-primary-foreground;
+  }
+
+  .edge-top {
+    @apply mt-2 border-2 border-t border-primary-foreground;
   }
 
   .error {
     @apply text-xs font-semibold text-rose-500;
   }
 
+  .input {
+    @apply w-full rounded-md bg-transparent p-2 font-normal text-gray-900 ring-1 ring-slate-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-slate-500;
+  }
+
   .label {
     @apply font-inter text-sm font-medium after:ml-0.5 after:text-rose-500 after:content-["*"];
   }
 
-  .input {
-    @apply w-full rounded-md bg-transparent p-2 font-normal text-gray-900 ring-1 ring-slate-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-slate-500;
+  .title {
+    @apply font-adlam-display text-6xl text-primary-foreground;
   }
 }
 
@@ -102,6 +106,7 @@
 }
 
 @keyframes spin {
+
   0%,
   100% {
     box-shadow: 0.2em 0px 0 0px currentcolor;

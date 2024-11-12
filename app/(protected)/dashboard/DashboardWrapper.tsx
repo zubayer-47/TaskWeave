@@ -1,20 +1,31 @@
+"use client";
+
 import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/sidebar/Sidebar";
+import ProjectProvider from "@/context/project/ProjectProvider";
+import { useAppSelector } from "@/lib/hooks";
+import { useEffect } from "react";
 
-export default function DashboardWrapper({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function DashboardWrapper({ children }: { children: React.ReactNode }) {
+  const user = useAppSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    console.log({ user }, "DashboardWrapper");
+  }, [user]);
   return (
-    <div className="flex min-h-screen bg-dark">
-      <Sidebar />
+    <ProjectProvider>
+      <div className="flex min-h-screen bg-dark">
+        <Sidebar />
 
-      <div className="flex w-full flex-col md:pl-64">
-        <Navbar />
+        <div className="flex w-full flex-col md:pl-64">
+          <Navbar />
 
-        {children}
+          {children}
+        </div>
       </div>
-    </div>
+    </ProjectProvider>
   );
 }
+// const DashboardWrapper = privateWrapperHOC(DashboardWrapperComponent);
+
+export default DashboardWrapper;

@@ -7,9 +7,7 @@ function Home() {
   return (
     <div className="flex h-screen select-none flex-col items-center justify-center gap-7">
       <div className="space-y-2 text-center">
-        <h1 className="font-adlam-display text-6xl text-primary-foreground">
-          Welcome to TaskWeave
-        </h1>
+        <h1 className="title">Welcome to TaskWeave</h1>
 
         <span className="font-adlam-display text-xl">
           {" "}
@@ -18,7 +16,7 @@ function Home() {
       </div>
 
       <Link
-        href="/dashboard"
+        href="/login"
         className="mb-5 rounded-lg bg-primary-foreground px-5 py-3 font-adlam-display text-xl text-gray-50 transition-colors hover:bg-primary-foreground/70"
       >
         Get Started
