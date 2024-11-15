@@ -1,6 +1,7 @@
 import React from "react";
 
 import "@/styles/globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { ADLaM_Display, Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
@@ -33,17 +34,18 @@ function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("loading root layout");
   return (
     <html lang="en" className={`light-bg ${adlam_display.variable}`}>
-      <body className={`h-screen w-full antialiased ${inter.className}`}>
-        <StoreProvider>
-          <PublicRouteWrapper>
-            {children}
+      <body className={`min-h-screen w-full antialiased ${inter.className}`}>
+        <ClerkProvider>
+          <StoreProvider>
+            <PublicRouteWrapper>
+              {children}
 
-            <Toaster position="top-center" />
-          </PublicRouteWrapper>
-        </StoreProvider>
+              <Toaster position="top-center" />
+            </PublicRouteWrapper>
+          </StoreProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

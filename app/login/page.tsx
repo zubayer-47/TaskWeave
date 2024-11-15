@@ -49,12 +49,12 @@ function Login() {
   };
 
   return (
-    <>
-      <div className="flex h-screen flex-col items-center justify-center gap-7 pb-20">
+    <div className="flex h-screen items-center justify-center">
+      <div className="auth_parent">
         <div className="space-y-2 text-center">
           <h1 className="title">Sign In</h1>
 
-          <h3 className="font-adlam-display text-xl">
+          <h3 className="font-adlam-display text-base md:text-xl">
             Authenticate to manage your project efficiently
           </h3>
         </div>
@@ -94,7 +94,7 @@ function Login() {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -26,6 +26,7 @@ const config: Config = {
         "task-stage-bg": "rgb(var(--task-stage-bg) / <alpha-value>)",
         "task-item-bg": "rgb(var(--task-item-bg) / <alpha-value>)",
         border: "rgb(var(--border) / <alpha-value>)",
+        "surface-primary": "rgb(var(--surface) / <alpha-value>)",
         "success-button": "rgb(var(--success-button) / <alpha-value>)",
         "task-stage-warning": "rgb(var(--task-stage-warning) / <alpha-value>)",
         "task-stage-slate": "rgb(var(--task-stage-slate) / <alpha-value>)",

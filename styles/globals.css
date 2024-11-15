@@ -10,6 +10,7 @@
     --task-stage-bg: 43 47 54;
     --task-item-bg: 27 29 32;
     --border: 58 63 68;
+    --surface: 245 247 249;
     --success-button: 5 150 105;
     --task-stage-warning: 245 158 11;
     --task-stage-slate: 161 161 170;
@@ -18,6 +19,10 @@
 }
 
 @layer components {
+  .auth_parent {
+    @apply flex bg-surface-primary w-fit flex-col items-center justify-center gap-3 md:gap-7 p-10 rounded-xl shadow-xl mx-2 md:mx-0;
+  }
+
   .button {
     @apply rounded-md bg-success-button px-2.5 py-1 font-inter font-semibold text-white transition-colors hover:bg-success-button/80;
   }
@@ -43,7 +48,7 @@
   }
 
   .title {
-    @apply font-adlam-display text-6xl text-primary-foreground;
+    @apply font-adlam-display text-5xl md:text-6xl text-primary-foreground;
   }
 }
 
