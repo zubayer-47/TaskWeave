@@ -3,15 +3,12 @@
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/sidebar/Sidebar";
 import ProjectProvider from "@/context/project/ProjectProvider";
-import { useAppSelector } from "@/lib/hooks";
-import { useEffect } from "react";
+import { useUser } from "@clerk/clerk-react";
 
 function DashboardWrapper({ children }: { children: React.ReactNode }) {
-  const user = useAppSelector((state) => state.auth.user);
+  const { isSignedIn, user } = useUser();
+  console.log({ user, isSignedIn }, "DashboardWrapper");
 
-  useEffect(() => {
-    console.log({ user }, "DashboardWrapper");
-  }, [user]);
   return (
     <ProjectProvider>
       <div className="flex min-h-screen bg-dark">

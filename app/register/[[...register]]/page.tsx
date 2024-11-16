@@ -1,14 +1,17 @@
 "use client";
 
 import Input from "@/components/Input";
-import { useRegisterMutation } from "@/lib/auth/authApi";
 import { Gender } from "@/lib/auth/types";
+import { useSignUp } from "@clerk/nextjs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
+import { FormEvent, useState } from "react";
 
 function Register() {
-  const [register] = useRegisterMutation();
+  const { isLoaded, setActive, signUp } = useSignUp();
+  const [verifying, setVerifying] = useState(false);
+  const [code, setCode] = useState("");
+  const [clerkError, setClerkError] = useState("");
   const router = useRouter();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,39 +26,64 @@ function Register() {
       gender: formData.get("gender") as Gender,
     };
 
+    if (!isLoaded) {
+      return;
+    }
+
     try {
-      await register(data).unwrap();
-
-      router.push("/dashboard");
-
-      toast.success("Login successful", {
-        style: {
-          background: "rgb(16, 185, 129)",
-          color: "#fff",
-        },
+      await signUp.create({
+        username: data.username,
+        // firstName: data.fullname,
+        emailAddress: data.email,
+        password: data.password,
       });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      if ("data" in error) {
-        if ("message" in error.data) {
-          toast.error(error.data.message, {
-            style: {
-              background: "rgb(239, 68, 68)",
-              color: "#fff",
-            },
-          });
-        }
+
+      // send mail
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+      setVerifying(true);
+
+      router.push("/register/verify");
+    } catch (err: any) {
+      console.log({ err }, "register");
+      setClerkError(err.errors[0].message);
+    }
+  };
+
+  const handleVerify = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (!isLoaded) {
+      return;
+    }
+
+    try {
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code,
+      });
+
+      if (completeSignUp.status !== "complete") {
+        console.log(
+          JSON.stringify(completeSignUp, null, 2),
+          "---register-verification-not-complete",
+        );
       }
+
+      if (completeSignUp.status === "complete") {
+        await setActive({ session: completeSignUp.createdSessionId });
+        router.push("/dashboard");
+      }
+    } catch (err) {
+      console.log("Error:", JSON.stringify(err, null, 2));
     }
   };
 
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="auth_parent">
-        <div className="space-y-2 text-center">
+        <div className="text-center">
           <h1 className="title">Sign Up</h1>
 
-          <h3 className="font-adlam-display text-base md:text-xl">
+          <h3 className="font-adlam-display text-base text-slate-500 md:text-xl">
             Authenticate to manage your project efficiently
           </h3>
         </div>

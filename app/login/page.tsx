@@ -1,60 +1,57 @@
 "use client";
 
 import Input from "@/components/Input";
-import { useLoginMutation } from "@/lib/auth/authApi";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 
 function Login() {
-  const [login] = useLoginMutation();
-  const router = useRouter();
+  // const [login] = useLoginMutation();
+  // const router = useRouter();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      username: formData.get("username"),
-      password: formData.get("password"),
-    };
+    // const formData = new FormData(e.currentTarget);
+    // const data = {
+    //   username: formData.get("username"),
+    //   password: formData.get("password"),
+    // };
 
-    try {
-      await login({
-        username: data.username as string,
-        password: data.password as string,
-      }).unwrap();
+    // try {
+    // await login({
+    //   username: data.username as string,
+    //   password: data.password as string,
+    // }).unwrap();
 
-      router.push("/dashboard");
+    // router.push("/dashboard");
 
-      toast.success("Login successful", {
-        style: {
-          background: "rgb(16, 185, 129)",
-          color: "#fff",
-        },
-      });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      if ("data" in error) {
-        if ("message" in error.data) {
-          toast.error(error.data.message, {
-            style: {
-              background: "rgb(239, 68, 68)",
-              color: "#fff",
-            },
-          });
-        }
-      }
-    }
+    // toast.success("Login successful", {
+    //   style: {
+    //     background: "rgb(16, 185, 129)",
+    //     color: "#fff",
+    //   },
+    // });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // } catch (error: any) {
+    //   if ("data" in error) {
+    //     if ("message" in error.data) {
+    //       toast.error(error.data.message, {
+    //         style: {
+    //           background: "rgb(239, 68, 68)",
+    //           color: "#fff",
+    //         },
+    //       });
+    //     }
+    //   }
+    // }
   };
 
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="auth_parent">
-        <div className="space-y-2 text-center">
+        <div className="text-center">
           <h1 className="title">Sign In</h1>
 
-          <h3 className="font-adlam-display text-base md:text-xl">
+          <h3 className="font-adlam-display text-base text-slate-500 md:text-xl">
             Authenticate to manage your project efficiently
           </h3>
         </div>

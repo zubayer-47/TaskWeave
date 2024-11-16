@@ -5,8 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { ADLaM_Display, Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
-import PublicRouteWrapper from "./PublicRouteWrapper";
-import StoreProvider from "./StoreProvider";
+import { ConvexClientProvider } from "./ConvexClientProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,6 +28,8 @@ export const metadata: Metadata = {
   },
 };
 
+const publishable_key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
 function RootLayout({
   children,
 }: Readonly<{
@@ -37,14 +38,23 @@ function RootLayout({
   return (
     <html lang="en" className={`light-bg ${adlam_display.variable}`}>
       <body className={`min-h-screen w-full antialiased ${inter.className}`}>
-        <ClerkProvider>
-          <StoreProvider>
-            <PublicRouteWrapper>
+        <ClerkProvider publishableKey={publishable_key!} dynamic>
+          <ConvexClientProvider>
+            {/* <StoreProvider> */}
+            {/* <PublicRouteWrapper> */}
+            {/* 
+            <Unauthenticated>
+              <SignInButton />
+            </Unauthenticated>
+            <Authenticated>
+              <UserButton />
               {children}
-
-              <Toaster position="top-center" />
-            </PublicRouteWrapper>
-          </StoreProvider>
+            </Authenticated> */}
+            {children}
+            <Toaster position="top-center" />
+            {/* </PublicRouteWrapper> */}
+            {/* </StoreProvider> */}
+          </ConvexClientProvider>
         </ClerkProvider>
       </body>
     </html>
