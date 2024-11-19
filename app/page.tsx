@@ -7,7 +7,9 @@ function Home() {
   return (
     <div className="flex h-screen select-none flex-col items-center justify-center gap-7">
       <div className="space-y-2 text-center">
-        <h1 className="title">Welcome to TaskWeave</h1>
+        <h1 className="title font-adlam-display text-5xl leading-relaxed">
+          Welcome to TaskWeave
+        </h1>
 
         <span className="font-adlam-display text-xl">
           {" "}

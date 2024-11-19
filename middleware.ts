@@ -1,11 +1,30 @@
+// import { decrypt } from "@/app/lib/session";
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-const isPublicRoute = createRouteMatcher(["/", "/login(.*)", "/register(.*)"]);
+const publicRouteMatcher = createRouteMatcher([
+  "/",
+  "/login",
+  "/register(.*)",
+  "/forgot-password(.*)",
+]);
 
-export default clerkMiddleware(async (auth, request) => {
-  if (!isPublicRoute(request)) {
-    await auth.protect();
+export default clerkMiddleware(async (auth, req) => {
+  const { userId } = await auth();
+  const path = req.nextUrl.pathname;
+  const isAccessingPrivateRoute = path.startsWith("/dashboard");
+
+  console.log({ matcher: publicRouteMatcher(req), path, userId });
+
+  if (!userId && !publicRouteMatcher(req)) {
+    return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
+
+  if (userId && publicRouteMatcher(req) && !isAccessingPrivateRoute) {
+    return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+  }
+
+  return NextResponse.next();
 });
 
 export const config = {

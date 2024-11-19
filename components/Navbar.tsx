@@ -5,6 +5,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import SignOutButton from "./SignOutButton";
 
 export default function Navbar() {
   const [menu, setMenu] = useState(false);
@@ -12,14 +13,6 @@ export default function Navbar() {
 
   const handleUserMenu = () => {
     setMenu((prev) => !prev);
-  };
-
-  const handleLogout = () => {
-    // if logout api is not works (it'll removed in future)
-    // dispatch(userLoggedOut());
-    // localStorage.clear();
-    // if logout api works
-    // dispatch(authApi.endpoints.logout.initiate());
   };
 
   return (
@@ -75,16 +68,7 @@ export default function Navbar() {
             License
           </Link>
           <form method="POST" action="#" role="none">
-            <button
-              type="submit"
-              className="block w-full px-4 py-2 text-left text-sm text-gray-700"
-              role="menuitem"
-              tabIndex={-1}
-              id="menu-item-3"
-              onClick={handleLogout}
-            >
-              Sign out
-            </button>
+            <SignOutButton />
           </form>
         </div>
       </div>

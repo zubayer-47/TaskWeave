@@ -1,11 +1,9 @@
-import React from 'react'
-
 const LoadingSpinner = () => {
   return (
-    <div className='absolute inset-0 w-full h-full bg-black flex justify-center items-center'>
+    <div className="absolute inset-0 flex h-full w-full items-center justify-center bg-dark">
       <span className="loader"></span>
     </div>
-  )
-}
+  );
+};
 
-export default LoadingSpinner
+export default LoadingSpinner;

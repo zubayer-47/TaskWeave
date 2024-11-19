@@ -5,6 +5,7 @@ import { useSignUp } from "@clerk/nextjs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
+import toast from "react-hot-toast";
 
 export default function Verify() {
   const { signUp, isLoaded, setActive } = useSignUp();
@@ -23,9 +24,16 @@ export default function Verify() {
     };
 
     try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code: data.code,
-      });
+      const completeSignUp = await toast.promise(
+        signUp.attemptEmailAddressVerification({
+          code: data.code,
+        }),
+        {
+          error: (err) => err?.errors[0].message || "Something went wrong",
+          loading: "Verifying...",
+          success: "Account verified successfully",
+        },
+      );
 
       if (completeSignUp.status !== "complete") {
         console.log(
@@ -46,35 +54,28 @@ export default function Verify() {
     <div className="flex h-screen items-center justify-center">
       <div className="auth_parent">
         <div className="text-center">
-          <h1 className="title text-4xl">Verify Account</h1>
+          <h1 className="title">Verify Account</h1>
 
-          <h3 className="font-adlam-display text-base text-slate-500 md:text-xl">
+          <h3 className="sub-title">
             Check your mail and enter the verification code
           </h3>
         </div>
-        <div>
+        <div className="w-full">
           <form onSubmit={handleVerify} className="flex flex-col gap-2">
             <Input
               id="code"
-              label="Code"
               name="code"
               type="text"
               required
               placeholder="Write your code"
             />
 
-            <button
-              type="submit"
-              className="mt-2 rounded-lg bg-primary-foreground py-2.5 font-adlam-display text-lg text-gray-50 transition-colors hover:bg-primary-foreground/70"
-            >
+            <button type="submit" className="auth-btn">
               {" "}
               Submit{" "}
             </button>
           </form>
-          <Link
-            href="/register"
-            className="mt-2 block text-center font-inter font-bold text-primary-foreground underline underline-offset-4 transition-colors hover:text-primary-foreground/70"
-          >
+          <Link href="/register" className="text-btn">
             Register
           </Link>
         </div>

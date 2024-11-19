@@ -36,11 +36,14 @@ const config: Config = {
       fontFamily: {
         inter: ["var(--font-inter)"],
         "adlam-display": ["var(--font-adlam-display)"],
+        catamaran: ["var(--font-catamaran)"],
+        "noto-sans": ["var(--font-noto-sans)"],
       },
 
       animation: {
         in: "animateIn 0.1s ease-out",
         out: "animateOut 0.1s ease-out",
+        fadeIn: "fadeIn .4s ease-out",
       },
 
       keyframes: {
@@ -51,6 +54,10 @@ const config: Config = {
         animateOut: {
           "0%": { opacity: "1", transform: "scale(1)" },
           "100%": { opacity: "0", transform: "scale(.95)" },
+        },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
       },
     },

@@ -3,11 +3,10 @@
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/sidebar/Sidebar";
 import ProjectProvider from "@/context/project/ProjectProvider";
-import { useUser } from "@clerk/clerk-react";
 
 function DashboardWrapper({ children }: { children: React.ReactNode }) {
-  const { isSignedIn, user } = useUser();
-  console.log({ user, isSignedIn }, "DashboardWrapper");
+  // const { isSignedIn, user } = useUser();
+  // console.log({ user, isSignedIn }, "DashboardWrapper");
 
   return (
     <ProjectProvider>
