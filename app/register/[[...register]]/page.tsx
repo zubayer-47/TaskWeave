@@ -18,7 +18,8 @@ function Register() {
 
     const formData = new FormData(e.currentTarget);
     const data = {
-      fullname: formData.get("fullname") as string,
+      first_name: formData.get("first_name") as string,
+      last_name: formData.get("last_name") as string,
       username: formData.get("username") as string,
       email: formData.get("email") as string,
       password: formData.get("password") as string,
@@ -41,6 +42,7 @@ function Register() {
     try {
       await toast.promise(
         signUp.create({
+          // fullName: data.fullname,
           username: data.username,
           // firstName: data.fullname,
           emailAddress: data.email,
@@ -78,12 +80,20 @@ function Register() {
         <div className="w-full">
           <form onSubmit={onSubmit} className="flex flex-col gap-2">
             <Input
-              id="fullname"
+              id="first_name"
               // label="Full Name"
-              name="fullname"
+              name="first_name"
               type="text"
               required
-              placeholder="Fullname"
+              placeholder="First Name"
+            />
+            <Input
+              id="last_name"
+              // label="Full Name"
+              name="last_name"
+              type="text"
+              required
+              placeholder="Last Name"
             />
             <Input
               id="username"

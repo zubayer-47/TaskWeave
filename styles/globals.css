@@ -20,18 +20,16 @@
 
 @layer components {
   .auth-btn {
-    @apply font-noto-sans mt-2 rounded-lg bg-primary-foreground py-2.5 text-base font-medium text-gray-50 transition-colors hover:bg-primary-foreground/70
+    @apply mt-2 rounded-lg bg-primary-foreground py-2.5 font-noto-sans text-base font-medium text-gray-50 transition-colors hover:bg-primary-foreground/70;
   }
 
   .auth_parent {
-    @apply mx-2 flex w-fit flex-col items-center justify-center gap-3 rounded-xl bg-surface-primary p-10 shadow-xl md:mx-0 md:gap-7;
+    @apply mx-2 flex w-fit flex-col items-center justify-center gap-3 rounded-xl bg-surface-primary p-5 shadow-xl md:mx-0 md:gap-7 md:p-10;
   }
 
   .button {
     @apply rounded-md bg-success-button px-2.5 py-1 font-inter font-semibold text-white transition-colors hover:bg-success-button/80;
   }
-
-
 
   .edge-bottom {
     @apply mt-2 border-2 border-b border-primary-foreground;
@@ -50,19 +48,19 @@
   }
 
   .label {
-    @apply font-noto-sans leading-6 text-sm font-medium after:ml-0.5 after:text-rose-500 after:content-["*"];
+    @apply font-noto-sans text-sm font-medium leading-6 after:ml-0.5 after:text-rose-500 after:content-["*"];
   }
 
   .sub-title {
-    @apply font-noto-sans text-base font-medium tracking-wide text-slate-600
+    @apply font-noto-sans text-base font-medium tracking-wide text-slate-600;
   }
 
   .title {
-    @apply font-catamaran text-4xl font-semibold text-primary-foreground leading-10;
+    @apply font-catamaran text-4xl font-semibold leading-10 text-primary-foreground;
   }
 
   .text-btn {
-    @apply font-noto-sans mt-2 block text-center text-base font-semibold tracking-wide text-primary-foreground underline underline-offset-4 transition-colors hover:text-primary-foreground/70
+    @apply mt-2 block text-center font-noto-sans text-base font-semibold tracking-wide text-primary-foreground underline underline-offset-4 transition-colors hover:text-primary-foreground/70;
   }
 }
 
@@ -125,7 +123,6 @@
 }
 
 @keyframes spin {
-
   0%,
   100% {
     box-shadow: 0.2em 0px 0 0px currentcolor;
