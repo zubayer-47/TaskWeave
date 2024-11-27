@@ -42,11 +42,15 @@ function Register() {
     try {
       await toast.promise(
         signUp.create({
-          // fullName: data.fullname,
           username: data.username,
-          // firstName: data.fullname,
+          firstName: data.first_name,
+          lastName: data.last_name,
           emailAddress: data.email,
           password: data.password,
+
+          unsafeMetadata: {
+            gender: data.gender || "MALE",
+          },
         }),
         {
           error: (err) => err?.errors[0].message || "Something went wrong",

@@ -1,32 +1,41 @@
 "use client";
 
-import zubayerLogo from "@/public/zubayer.jpg";
-import clsx from "clsx";
+import { useUser } from "@clerk/clerk-react";
+import { Bolt, UserRound } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import SignOutButton from "./SignOutButton";
 
 export default function Navbar() {
-  const [menu, setMenu] = useState(false);
-  // const dispatch = useAppDispatch();
-
-  const handleUserMenu = () => {
-    setMenu((prev) => !prev);
-  };
+  const user = useUser();
 
   return (
-    <nav className="flex h-16 items-center justify-end border-b border-border bg-dashboard-bg px-4 py-2">
-      <button type="button" onClick={handleUserMenu}>
+    <nav className="dropdown flex h-16 items-center justify-end border-b border-border bg-dashboard-bg px-4 py-2">
+      <button type="button" data-dropdown-btn>
         <Image
-          src={zubayerLogo}
-          className="h-12 w-12 rounded-full"
+          src={user.user?.imageUrl || "/zubayer.jpg"}
+          width={40}
+          height={40}
+          className="h-10 w-10 rounded-full object-cover"
           alt="Dashboard Feature Image"
           priority
         />
       </button>
 
-      <div
+      <div className="dropdown-menu">
+        <Link href={"/dashboard/profile"} className="dropdown-link">
+          <UserRound />
+          <span>Profile</span>
+        </Link>
+
+        <Link href={"/dashboard/settings"} className="dropdown-link">
+          <Bolt />
+          <span>Settings</span>
+        </Link>
+        <SignOutButton />
+      </div>
+
+      {/* <div
         className={clsx(
           "absolute right-3 top-16 z-10 w-56 origin-top-right rounded-md bg-slate-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none",
           {
@@ -71,7 +80,7 @@ export default function Navbar() {
             <SignOutButton />
           </form>
         </div>
-      </div>
+      </div> */}
       {/* </div> */}
     </nav>
   );

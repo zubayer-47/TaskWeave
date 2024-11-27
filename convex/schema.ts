@@ -6,7 +6,7 @@ export default defineSchema({
     fullname: v.string(),
     username: v.string(),
     email: v.string(),
-    password: v.string(),
+    // password: v.string(),
     gender: v.union(v.literal("Male"), v.literal("Female")),
     avatar: v.string(),
     bio: v.string(),
@@ -28,11 +28,12 @@ export default defineSchema({
       v.literal("STUCK"),
       v.literal("COMPLETED"),
     ),
-    tasks: v.array(v.id("tasks")),
+    // tasks: v.array(v.id("tasks")),
   }).index("by_project_id", ["project_id"]),
 
   tasks: defineTable({
     stage_id: v.id("stages"),
+    project_id: v.id("projects"),
     title: v.string(),
     description: v.optional(v.string()),
     status: v.union(

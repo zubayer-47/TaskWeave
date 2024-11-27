@@ -1,5 +1,4 @@
 import { mutation } from "./_generated/server";
-
 export const store = mutation({
   args: {},
   handler: async (ctx) => {
@@ -7,8 +6,7 @@ export const store = mutation({
 
     console.log({ identity }, "customUserIdentity");
 
-    // if (!identity) throw new Error("Unauthorized!");
-    if (!identity) return { identity, error: "Unauthorized!" };
+    if (!identity) throw new Error("Unauthorized!");
 
     // Check if the user is already stored in the database
     const user = await ctx.db
@@ -21,23 +19,25 @@ export const store = mutation({
     if (user !== null) {
       // If the user is already in the database but the name change,
       // Patch the new name
-      // if (user.name !== identity.name) {
+      // if (user.fullname !== identity.name) {
       //   await ctx.db.patch(user._id, {
       //     name: identity.name,
       //     profileUrl: identity.pictureUrl,
       //   });
       // }
 
-      return { user };
+      return user._id;
     }
 
-    return { identity };
-
     // If it's a new user, we create a new one
-    // return await ctx.db.insert("users", {
-    //   name: identity.name!,
-    //   profileUrl: identity.pictureUrl!,
-    //   tokenIdentifier: identity.tokenIdentifier,
-    // });
+    return await ctx.db.insert("users", {
+      fullname: identity.name!,
+      avatar: identity.pictureUrl!,
+      bio: "",
+      username: identity.nickname!,
+      email: identity.email!,
+      gender: identity.gender === "male" ? "Male" : "Female",
+      tokenIdentifier: identity.tokenIdentifier,
+    });
   },
 });

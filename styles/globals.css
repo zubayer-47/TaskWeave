@@ -31,6 +31,14 @@
     @apply rounded-md bg-success-button px-2.5 py-1 font-inter font-semibold text-white transition-colors hover:bg-success-button/80;
   }
 
+  .dropdown {
+    @apply relative;
+  }
+
+  .dropdown-link {
+    @apply flex w-full items-center gap-2 px-4 py-2 text-slate-800 transition-colors hover:bg-slate-300;
+  }
+
   .edge-bottom {
     @apply mt-2 border-2 border-b border-primary-foreground;
   }
@@ -63,6 +71,39 @@
     @apply mt-2 block text-center font-noto-sans text-base font-semibold tracking-wide text-primary-foreground underline underline-offset-4 transition-colors hover:text-primary-foreground/70;
   }
 }
+
+/* dropdown menu */
+
+.dropdown-menu {
+  position: absolute;
+  right: 0.3rem;
+  top: calc(100% + 0.3rem);
+  background-color: #f1f5f9; /*slate-100*/
+  display: flex;
+  flex-direction: column;
+  min-width: 12rem;
+  border-radius: 0.3rem;
+  overflow: hidden;
+
+  transform: translateY(-10px);
+
+  opacity: 0.2;
+  visibility: hidden;
+  /* pointer-events: none; */
+
+  transition:
+    opacity 150ms ease-in-out,
+    transform 150ms ease-in-out,
+    visibility 150ms ease-in-out;
+}
+
+.dropdown > [data-dropdown-btn]:focus + .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* dropdown menu */
 
 .light-bg {
   background: linear-gradient(180deg, #f1f8ff 38%, #b4d6ff 100%);

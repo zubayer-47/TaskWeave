@@ -1,9 +1,7 @@
 "use client";
 
-import { useProfileQuery } from "@/lib/auth/authApi";
-
 export default function Profile() {
-  useProfileQuery();
+  // useProfileQuery();
 
   return <div>Profile</div>;
 }
