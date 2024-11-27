@@ -34,54 +34,6 @@ export default function Navbar() {
         </Link>
         <SignOutButton />
       </div>
-
-      {/* <div
-        className={clsx(
-          "absolute right-3 top-16 z-10 w-56 origin-top-right rounded-md bg-slate-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none",
-          {
-            "animate-in opacity-100": menu,
-            "hidden animate-out opacity-0": !menu,
-          },
-        )}
-        role="menu"
-        aria-orientation="vertical"
-        aria-labelledby="menu-button"
-        tabIndex={-1}
-      >
-        <div className="py-1" role="none">
-          <Link
-            href="#"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-500"
-            role="menuitem"
-            tabIndex={-1}
-            id="menu-item-0"
-          >
-            Account settings
-          </Link>
-          <Link
-            href="#"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-500"
-            role="menuitem"
-            tabIndex={-1}
-            id="menu-item-1"
-          >
-            Support
-          </Link>
-          <Link
-            href="#"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-500"
-            role="menuitem"
-            tabIndex={-1}
-            id="menu-item-2"
-          >
-            License
-          </Link>
-          <form method="POST" action="#" role="none">
-            <SignOutButton />
-          </form>
-        </div>
-      </div> */}
-      {/* </div> */}
     </nav>
   );
 }

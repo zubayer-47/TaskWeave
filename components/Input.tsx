@@ -8,6 +8,8 @@ type Props = {
   label?: string;
   hint?: string;
   required?: boolean;
+  theme?: "light" | "dark";
+  size?: "md" | "lg";
   forgot_password?: boolean;
   placeholder?: string;
   type?: "text" | "email" | "password" | "date";
@@ -22,6 +24,9 @@ export default function Input({
   placeholder,
   hint,
   required,
+  theme = "light",
+
+  size = "md",
   forgot_password,
   type = "text",
   error,
@@ -38,7 +43,10 @@ export default function Input({
   return (
     <div className="mb-2 space-y-1">
       {label && (
-        <label htmlFor={id} className="label">
+        <label
+          htmlFor={id}
+          className={clsx("label", { "text-slate-100": theme === "dark" })}
+        >
           {label}
         </label>
       )}
@@ -53,6 +61,10 @@ export default function Input({
         autoComplete={autoComplete}
         className={clsx("input peer", {
           "ring-rose-500 focus:ring-rose-500": error,
+          "text-slate-100 ring-border focus:ring-border": theme === "dark",
+          "ring-slate-300 focus:ring-slate-500": theme === "light",
+          "p-2": size === "md",
+          "p-3": size === "lg",
         })}
         placeholder={placeholder}
       />
@@ -68,7 +80,7 @@ export default function Input({
       {error && <p className="error">{error}</p>}
 
       {hint && (
-        <p className="peer-focus:animate-fadeIn hidden text-sm text-slate-500 peer-focus:block">
+        <p className="hidden text-sm text-slate-500 peer-focus:block peer-focus:animate-fadeIn">
           {hint}
         </p>
       )}
