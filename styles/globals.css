@@ -15,6 +15,7 @@
     --task-stage-warning: 245 158 11;
     --task-stage-slate: 161 161 170;
     --task-priority-urgent: 248 113 113;
+    --bg-red: 220 38 38;
   }
 }
 
@@ -52,7 +53,7 @@
   }
 
   .input {
-    @apply w-full rounded-md bg-transparent font-noto-sans font-normal text-gray-900 ring-1 transition-all duration-200 focus:outline-none focus:ring-2;
+    @apply w-full rounded-md bg-transparent font-noto-sans font-normal ring-1 transition-all duration-200 focus:outline-none focus:ring-2;
   }
 
   .label {
@@ -78,7 +79,8 @@
   position: absolute;
   right: 0.3rem;
   top: calc(100% + 0.3rem);
-  background-color: #f1f5f9; /*slate-100*/
+  background-color: #f1f5f9;
+  /*slate-100*/
   display: flex;
   flex-direction: column;
   min-width: 12rem;
@@ -97,7 +99,7 @@
     visibility 150ms ease-in-out;
 }
 
-.dropdown > [data-dropdown-btn]:focus + .dropdown-menu {
+.dropdown>[data-dropdown-btn]:focus+.dropdown-menu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -164,6 +166,7 @@
 }
 
 @keyframes spin {
+
   0%,
   100% {
     box-shadow: 0.2em 0px 0 0px currentcolor;

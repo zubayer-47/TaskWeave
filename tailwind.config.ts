@@ -32,6 +32,7 @@ const config: Config = {
         "task-stage-slate": "rgb(var(--task-stage-slate) / <alpha-value>)",
         "task-priority-urgent":
           "rgb(var(--task-priority-urgent) / <alpha-value>)",
+        red: "rgb(var(--bg-red) / <alpha-value>)",
       },
       fontFamily: {
         inter: ["var(--font-inter)"],

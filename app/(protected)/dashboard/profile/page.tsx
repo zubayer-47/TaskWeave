@@ -2,6 +2,7 @@
 
 import Input from "@/components/Input";
 import taskweave_cover from "@/public/taskweave-cover.png";
+import clsx from "clsx";
 
 import Image from "next/image";
 
@@ -29,22 +30,22 @@ export default function Profile() {
           />
 
           <div className="mt-10">
-            <h1 className="font-catamaran text-4xl font-bold text-slate-100">
+            <h1 className="font-noto-sans text-4xl font-bold text-slate-100">
               A B M Zubayer
             </h1>
-            <h2 className="font-catamaran text-2xl font-semibold text-slate-300">
+            <h2 className="font-noto-sans text-2xl font-semibold text-slate-400">
               @zdevp
             </h2>
           </div>
         </div>
 
-        <div className="mt-16">
-          <h1 className="font-catamaran text-4xl font-bold text-slate-100">
+        <div className="mt-10">
+          <h1 className="font-noto-sans text-4xl font-bold text-slate-100">
             Personal Information
           </h1>
           <hr className="my-2 w-32 border-b border-border" />
 
-          <div className="grid grid-cols-2 gap-10">
+          <div className="mt-10 grid grid-cols-2 gap-5">
             <Input
               id="firstname"
               label="First Name"
@@ -65,6 +66,54 @@ export default function Profile() {
               theme="dark"
               size="lg"
             />
+            <Input
+              id="email"
+              label="Email"
+              placeholder="example@me.com"
+              type="email"
+              name="email"
+              required
+              theme="dark"
+              size="lg"
+            />
+
+            <div>
+              <label
+                htmlFor="countries"
+                className={clsx(
+                  "mb-2 block text-sm font-medium text-slate-400",
+                  "label",
+                )}
+              >
+                Gender
+              </label>
+              <select
+                id="countries"
+                className="input p-3 text-slate-400 ring-1 ring-border"
+              >
+                <option selected>Choose a country</option>
+                <option value="male">MALE</option>
+                <option value="female">FEMALE</option>
+              </select>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                className={clsx("button px-4 py-2", "rounded-[1.3rem]")}
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                className={clsx(
+                  "button px-4 py-2",
+                  "bg-red hover:bg-red/70 rounded-[1.3rem]",
+                )}
+              >
+                Discard
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -45,7 +45,7 @@ export default function Input({
       {label && (
         <label
           htmlFor={id}
-          className={clsx("label", { "text-slate-100": theme === "dark" })}
+          className={clsx("label", { "text-slate-400": theme === "dark" })}
         >
           {label}
         </label>
@@ -61,8 +61,10 @@ export default function Input({
         autoComplete={autoComplete}
         className={clsx("input peer", {
           "ring-rose-500 focus:ring-rose-500": error,
-          "text-slate-100 ring-border focus:ring-border": theme === "dark",
-          "ring-slate-300 focus:ring-slate-500": theme === "light",
+          "text-slate-400 ring-border focus:text-slate-100 focus:ring-border":
+            theme === "dark",
+          "text-slate-900 ring-slate-300 focus:ring-slate-500":
+            theme === "light",
           "p-2": size === "md",
           "p-3": size === "lg",
         })}
