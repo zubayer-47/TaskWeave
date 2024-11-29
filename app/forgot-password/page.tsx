@@ -34,7 +34,8 @@ const ForgotPasswordPage: NextPage = () => {
         strategy: "reset_password_email_code",
         identifier: email,
       })
-      .then((_) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .then((_res) => {
         setSuccessfulCreation(true);
         setError("");
       })

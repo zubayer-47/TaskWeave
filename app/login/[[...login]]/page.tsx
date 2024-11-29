@@ -44,6 +44,7 @@ function Login() {
         });
         router.push("/dashboard");
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       // toast.error(err.errors[0].message);
       console.log({ err }, "login_error");

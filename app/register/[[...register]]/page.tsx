@@ -64,6 +64,7 @@ function Register() {
       // setVerifying(true);
 
       router.push("/register/verify");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.log({ err }, "register_error");
       // toast.error(err?.errors[0].message);

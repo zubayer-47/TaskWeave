@@ -8,7 +8,7 @@ import Image from "next/image";
 
 export default function Profile() {
   return (
-    <section id="profile" className="overflow-y-auto">
+    <section id="profile" className="overflow-y-auto pb-10">
       <Image
         src={taskweave_cover}
         width={1000}
@@ -108,7 +108,7 @@ export default function Profile() {
                 type="button"
                 className={clsx(
                   "button px-4 py-2",
-                  "bg-red hover:bg-red/70 rounded-[1.3rem]",
+                  "rounded-[1.3rem] bg-red hover:bg-red/70",
                 )}
               >
                 Discard
