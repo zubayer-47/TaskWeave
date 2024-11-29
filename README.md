@@ -27,6 +27,14 @@ TaskWeave is a feature-rich project management application designed to simplify 
 
 ![project](https://github.com/user-attachments/assets/fd7bc9ca-0057-4798-b783-e9c0cfa3b191)
 
+## Profile
+
+![profile](https://github.com/user-attachments/assets/4b6a7822-daec-4a48-a1d8-5a2f53374daa)
+
+## Database Diagram
+
+![taskweave-db-diagram](https://github.com/user-attachments/assets/9292ea6f-32aa-47f8-9211-126a7dcb37cd)
+
 # Installation
 
 1. Clone the repository

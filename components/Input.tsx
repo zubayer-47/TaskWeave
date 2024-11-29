@@ -1,10 +1,16 @@
+import clsx from "clsx";
+import Link from "next/link";
 import { HTMLInputAutoCompleteAttribute, useState } from "react";
 
 type Props = {
   id: string;
-  label: string;
   name: string;
+  label?: string;
+  hint?: string;
   required?: boolean;
+  theme?: "light" | "dark";
+  size?: "md" | "lg";
+  forgot_password?: boolean;
   placeholder?: string;
   type?: "text" | "email" | "password" | "date";
   error?: string;
@@ -16,7 +22,12 @@ export default function Input({
   id,
   label,
   placeholder,
+  hint,
   required,
+  theme = "light",
+
+  size = "md",
+  forgot_password,
   type = "text",
   error,
   name,
@@ -31,9 +42,14 @@ export default function Input({
 
   return (
     <div className="mb-2 space-y-1">
-      <label htmlFor={id} className="label">
-        {label}
-      </label>
+      {label && (
+        <label
+          htmlFor={id}
+          className={clsx("label", { "text-slate-400": theme === "dark" })}
+        >
+          {label}
+        </label>
+      )}
       <input
         type={type}
         id={id}
@@ -43,11 +59,33 @@ export default function Input({
         required={required}
         disabled={disabled}
         autoComplete={autoComplete}
-        className="input"
+        className={clsx("input peer", {
+          "ring-rose-500 focus:ring-rose-500": error,
+          "text-slate-400 ring-border focus:text-slate-100 focus:ring-border":
+            theme === "dark",
+          "text-slate-900 ring-slate-300 focus:ring-slate-500":
+            theme === "light",
+          "p-2": size === "md",
+          "p-3": size === "lg",
+        })}
         placeholder={placeholder}
       />
 
+      {forgot_password && (
+        <Link
+          href="/forgot-password"
+          className="font-noto-sans text-sm font-medium tracking-wide text-primary-foreground transition-all duration-200 hover:text-primary-foreground/80"
+        >
+          Forgot password?
+        </Link>
+      )}
       {error && <p className="error">{error}</p>}
+
+      {hint && (
+        <p className="hidden text-sm text-slate-500 peer-focus:block peer-focus:animate-fadeIn">
+          {hint}
+        </p>
+      )}
     </div>
   );
 }

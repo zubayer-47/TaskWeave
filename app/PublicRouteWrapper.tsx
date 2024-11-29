@@ -1,7 +1,7 @@
 "use client";
 
 import privateWrapperHOC from "@/components/HOCs/PrivateWrapperHOC";
-import { useAppSelector } from "@/lib/hooks";
+import { useUser } from "@clerk/clerk-react";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
@@ -10,7 +10,8 @@ function PublicRouteWrapperComponent({
 }: {
   children: React.ReactNode;
 }) {
-  const user = useAppSelector((state) => state.auth.user);
+  // const user = useAppSelector((state) => state.auth.user);
+  const { user } = useUser();
   const router = useRouter();
   const pathname = usePathname();
 
