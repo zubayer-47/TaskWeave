@@ -1,10 +1,12 @@
+import { currentUser } from "@clerk/nextjs/server";
 import { mutation } from "./_generated/server";
+
 export const store = mutation({
   args: {},
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
-
-    console.log({ identity }, "customUserIdentity");
+    const cuser = await currentUser;
+    console.log({ identity, cuser }, "customUserIdentity");
 
     if (!identity) throw new Error("Unauthorized!");
 
@@ -19,12 +21,12 @@ export const store = mutation({
     if (user !== null) {
       // If the user is already in the database but the name change,
       // Patch the new name
-      // if (user.fullname !== identity.name) {
-      //   await ctx.db.patch(user._id, {
-      //     name: identity.name,
-      //     profileUrl: identity.pictureUrl,
-      //   });
-      // }
+      console.log(user.fullname !== identity.name, "store 22");
+      if (user.fullname !== identity.name) {
+        await ctx.db.patch(user._id, {
+          fullname: identity.name,
+        });
+      }
 
       return user._id;
     }

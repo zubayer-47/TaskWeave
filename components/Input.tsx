@@ -8,6 +8,7 @@ type Props = {
   label?: string;
   hint?: string;
   required?: boolean;
+  defaultValue?: string | null;
   theme?: "light" | "dark";
   size?: "md" | "lg";
   forgot_password?: boolean;
@@ -24,6 +25,7 @@ export default function Input({
   placeholder,
   hint,
   required,
+  defaultValue,
   theme = "light",
 
   size = "md",
@@ -34,7 +36,7 @@ export default function Input({
   disabled,
   autoComplete,
 }: Props) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(defaultValue || "");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
