@@ -43,11 +43,14 @@ export default function Input({
   };
 
   return (
-    <div className="mb-2 space-y-1">
+    <div className="space-y-1">
       {label && (
         <label
           htmlFor={id}
-          className={clsx("label", { "text-slate-400": theme === "dark" })}
+          className={clsx("label", {
+            "text-slate-400": theme === "dark",
+            "text-slate-500 after:text-slate-500": disabled,
+          })}
         >
           {label}
         </label>
@@ -65,6 +68,7 @@ export default function Input({
           "ring-rose-500 focus:ring-rose-500": error,
           "text-slate-400 ring-border focus:text-slate-100 focus:ring-border":
             theme === "dark",
+          "text-slate-500": disabled,
           "text-slate-900 ring-slate-300 focus:ring-slate-500":
             theme === "light",
           "p-2": size === "md",

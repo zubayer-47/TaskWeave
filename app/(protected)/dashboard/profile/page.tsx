@@ -11,10 +11,11 @@ import toast from "react-hot-toast";
 
 export default function Profile() {
   const { user, isSignedIn, isLoaded } = useUser();
-
+  // const router = useRouter();
+  const deleteUserMutation = useMutation(api.users.deleteUser);
   // useStoreUserEffect();
 
-  const storeUser = useMutation(api.users.store);
+  // const storeUser = useMutation(api.users.store);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,6 +31,7 @@ export default function Profile() {
     const lastName = formData.get("lastname") as string;
     // const email = formData.get("email") as string;
     const gender = formData.get("gender") as string;
+    const bio = formData.get("bio") as string;
 
     try {
       await toast.promise(
@@ -37,7 +39,8 @@ export default function Profile() {
           firstName,
           lastName,
           unsafeMetadata: {
-            gender,
+            gender: gender.toUpperCase(),
+            bio,
           },
         }),
         {
@@ -47,7 +50,7 @@ export default function Profile() {
         },
       );
 
-      await storeUser();
+      // await storeUser();
     } catch (error) {
       console.log(error, "profile_error");
     }
@@ -151,6 +154,20 @@ export default function Profile() {
               </select>
             </div>
 
+            <div className="col-span-full">
+              <Input
+                id="bio"
+                label="Bio"
+                placeholder="Bio"
+                type="text"
+                name="bio"
+                required
+                theme="dark"
+                size="lg"
+                defaultValue={user?.unsafeMetadata.bio as string}
+              />
+            </div>
+
             <div className="flex items-center gap-3">
               <button
                 type="submit"
@@ -166,6 +183,27 @@ export default function Profile() {
                 )}
               >
                 Discard
+              </button>
+
+              <button
+                type="button"
+                className={clsx(
+                  "button px-4 py-2",
+                  "rounded-[1.3rem] bg-red hover:bg-red/70",
+                )}
+                onClick={async () => {
+                  if (!user) return;
+                  await deleteUserMutation();
+
+                  await toast.promise(user.delete(), {
+                    loading: "Deleting...",
+                    success: "Deleted successfully",
+                    error: (err) =>
+                      err?.errors[0].message || "Something went wrong",
+                  });
+                }}
+              >
+                Delete Account
               </button>
             </div>
           </form>

@@ -5,13 +5,18 @@ export default defineSchema({
   users: defineTable({
     fullname: v.string(),
     username: v.string(),
+    // username: v.any(),
     email: v.string(),
     // password: v.string(),
-    gender: v.union(v.literal("Male"), v.literal("Female")),
+    gender: v.union(v.literal("MALE"), v.literal("FEMALE")),
+    // gender: v.any(),
     avatar: v.string(),
     bio: v.string(),
-    tokenIdentifier: v.string(),
-  }).index("by_token", ["tokenIdentifier"]),
+    // tokenIdentifier: v.string(),
+
+    clerk_id: v.string(),
+  }).index("by_clerkId", ["clerk_id"]),
+  // }).index("by_token", ["tokenIdentifier"]),
 
   projects: defineTable({
     name: v.string(),

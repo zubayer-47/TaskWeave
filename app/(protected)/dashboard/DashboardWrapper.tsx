@@ -3,7 +3,6 @@
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/sidebar/Sidebar";
 import ProjectProvider from "@/context/project/ProjectProvider";
-import { useStoreUserEffect } from "@/hooks/useStoreUserEffect";
 
 function DashboardWrapper({ children }: { children: React.ReactNode }) {
   // const { isSignedIn, user } = useUser();
@@ -23,7 +22,7 @@ function DashboardWrapper({ children }: { children: React.ReactNode }) {
   //   })();
   // }, [isAuthenticated, storeUser]);
 
-  useStoreUserEffect();
+  // useStoreUserEffect();
 
   return (
     <ProjectProvider>
