@@ -37,14 +37,14 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
       });
       break;
     }
-    case "user.deleted": {
-      // Clerk docs say this is required, but the types say optional?
-      const id = event.data.id!;
-      console.log({ event }, "user from delete XXXXXXXXXX");
+    // case "user.deleted": {
+    //   // Clerk docs say this is required, but the types say optional?
+    //   const id = event.data.id!;
+    //   console.log({ event }, "user from delete XXXXXXXXXX");
 
-      await ctx.runMutation(internal.users.internalDeleteUser, { id });
-      break;
-    }
+    //   await ctx.runMutation(internal.users.internalDeleteUser, { id });
+    //   break;
+    // }
     default: {
       console.log("ignored Clerk webhook event", event.type);
     }

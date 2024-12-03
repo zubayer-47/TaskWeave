@@ -1,18 +1,14 @@
 "use client";
 
 import Input from "@/components/Input";
-import { api } from "@/convex/_generated/api";
 import taskweave_cover from "@/public/taskweave-cover.png";
 import { useUser } from "@clerk/nextjs";
 import clsx from "clsx";
-import { useMutation } from "convex/react";
 import Image from "next/image";
 import toast from "react-hot-toast";
 
 export default function Profile() {
   const { user, isSignedIn, isLoaded } = useUser();
-  // const router = useRouter();
-  const deleteUserMutation = useMutation(api.users.deleteUser);
   // useStoreUserEffect();
 
   // const storeUser = useMutation(api.users.store);
@@ -183,27 +179,6 @@ export default function Profile() {
                 )}
               >
                 Discard
-              </button>
-
-              <button
-                type="button"
-                className={clsx(
-                  "button px-4 py-2",
-                  "rounded-[1.3rem] bg-red hover:bg-red/70",
-                )}
-                onClick={async () => {
-                  if (!user) return;
-                  await deleteUserMutation();
-
-                  await toast.promise(user.delete(), {
-                    loading: "Deleting...",
-                    success: "Deleted successfully",
-                    error: (err) =>
-                      err?.errors[0].message || "Something went wrong",
-                  });
-                }}
-              >
-                Delete Account
               </button>
             </div>
           </form>

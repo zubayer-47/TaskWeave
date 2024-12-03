@@ -4,7 +4,6 @@ import { Doc, Id } from "./_generated/dataModel";
 import {
   internalMutation,
   internalQuery,
-  mutation,
   MutationCtx,
   query,
   QueryCtx,
@@ -122,17 +121,17 @@ export const getCurrentUser = query({
 });
 
 /** Delete a user by clerk user ID. */
-export const deleteUser = mutation({
-  args: {},
-  async handler(ctx) {
-    const user = await currentUserQuery(ctx);
-    if (!user) return;
+// export const deleteUser = mutation({
+//   args: {},
+//   async handler(ctx) {
+//     const user = await currentUserQuery(ctx);
+//     if (!user) return;
 
-    console.log({ user }, "user from deleteUserMutation");
+//     console.log({ user }, "user from deleteUserMutation");
 
-    return await ctx.db.delete(user._id);
-  },
-});
+//     return await ctx.db.delete(user._id);
+//   },
+// });
 
 /** Delete a user by clerk user ID. */
 export const internalDeleteUser = internalMutation({

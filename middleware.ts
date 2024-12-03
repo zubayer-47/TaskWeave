@@ -10,11 +10,11 @@ const publicRouteMatcher = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
-  const { userId } = await auth();
+  const { userId, sessionId } = await auth();
   const path = req.nextUrl.pathname;
   const isAccessingPrivateRoute = path.startsWith("/dashboard");
 
-  console.log({ matcher: publicRouteMatcher(req), path, userId });
+  console.log({ matcher: publicRouteMatcher(req), path, userId, sessionId });
 
   if (!userId && !publicRouteMatcher(req)) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
