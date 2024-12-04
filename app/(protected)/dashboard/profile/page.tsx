@@ -29,6 +29,12 @@ export default function Profile() {
     const gender = formData.get("gender") as string;
     const bio = formData.get("bio") as string;
 
+    if (!firstName && !lastName && !gender) {
+      toast.error("first_name, last_name and gender fields are required!");
+
+      return;
+    }
+
     try {
       await toast.promise(
         user.update({
@@ -157,7 +163,6 @@ export default function Profile() {
                 placeholder="Bio"
                 type="text"
                 name="bio"
-                required
                 theme="dark"
                 size="lg"
                 defaultValue={user?.unsafeMetadata.bio as string}
@@ -171,7 +176,7 @@ export default function Profile() {
               >
                 Save
               </button>
-              <button
+              {/* <button
                 type="button"
                 className={clsx(
                   "button px-4 py-2",
@@ -179,7 +184,7 @@ export default function Profile() {
                 )}
               >
                 Discard
-              </button>
+              </button> */}
             </div>
           </form>
         </div>

@@ -57,7 +57,7 @@
   }
 
   .label {
-    @apply font-noto-sans text-sm font-medium leading-6 after:ml-0.5 after:text-rose-500 after:content-["*"];
+    @apply font-noto-sans text-sm font-medium leading-6;
   }
 
   .sub-title {
@@ -99,7 +99,7 @@
     visibility 150ms ease-in-out;
 }
 
-.dropdown>[data-dropdown-btn]:focus+.dropdown-menu {
+.dropdown > [data-dropdown-btn]:focus + .dropdown-menu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -166,7 +166,6 @@
 }
 
 @keyframes spin {
-
   0%,
   100% {
     box-shadow: 0.2em 0px 0 0px currentcolor;

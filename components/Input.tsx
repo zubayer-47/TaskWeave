@@ -49,7 +49,8 @@ export default function Input({
           htmlFor={id}
           className={clsx("label", {
             "text-slate-400": theme === "dark",
-            "text-slate-500 after:text-slate-500": disabled,
+            "after:ml-0.5 after:text-rose-500 after:content-['*']": required,
+            "!text-slate-500 after:!text-slate-500": disabled,
           })}
         >
           {label}
