@@ -50,17 +50,19 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 
   const moveTask = useCallback(
     ({
+      currentStageData,
       movedTaskIndexInSourceStage,
       sourceStageId,
       destinationStageId,
       movedTaskIndexInDestinationStage,
     }: {
+      currentStageData: StageType[];
       movedTaskIndexInSourceStage: number;
       sourceStageId: string;
       destinationStageId: string;
       movedTaskIndexInDestinationStage?: number;
     }) => {
-      const clonedStagesData = [...stagesData];
+      const clonedStagesData = [...currentStageData];
 
       const sourceStageData = clonedStagesData.find(
         (stage) => stage.stage_id === sourceStageId,
@@ -112,7 +114,7 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 
       setStagesData(() => clonedStagesData);
     },
-    [stagesData, setStagesData],
+    [setStagesData],
   );
 
   const handleDrop = useCallback(
@@ -162,6 +164,7 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
               }
             } else {
               moveTask({
+                currentStageData: stagesData,
                 sourceStageId,
                 destinationStageId,
                 movedTaskIndexInSourceStage: draggedTaskIndex,
@@ -215,6 +218,7 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
                       : targetedTaskIndex;
 
                   moveTask({
+                    currentStageData: stagesData,
                     movedTaskIndexInSourceStage: draggedTaskIndex,
                     sourceStageId,
                     destinationStageId,

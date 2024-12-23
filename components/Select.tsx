@@ -26,7 +26,7 @@ export default function Select({
   };
 
   return (
-    <div className="mb-2 space-y-1">
+    <div className="space-y-1">
       <label htmlFor={id} className="label">
         {label}
       </label>
@@ -37,7 +37,7 @@ export default function Select({
         onChange={handleChange}
         required={required}
         disabled={disabled}
-        className="input"
+        className="input p-2"
       >
         {children}
       </select>

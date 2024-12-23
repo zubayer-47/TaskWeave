@@ -10,8 +10,6 @@ import TaskStage from "./components/TaskStage";
 
 function Project() {
   const { stagesData, handleDrop } = useProject() as ProjectType;
-  // const pathname = usePathname();
-  // const isOpen = !!pathname.endsWith("/opweave");
 
   useEffect(() => {
     return monitorForElements({
@@ -20,10 +18,18 @@ function Project() {
   }, [stagesData, handleDrop]);
 
   return (
-    <div className="h-full w-full rounded-3xl bg-dark pt-3">
-      <h1 className="px-4 pb-3 font-adlam-display text-xl text-white">
-        OpWeave
-      </h1>
+    <div className="h-full w-full rounded-3xl bg-dark">
+      <div className="flex w-full items-center justify-between px-4">
+        <h1 className="py-3 font-adlam-display text-xl text-white">OpWeave</h1>
+
+        <time
+          className="text-muted font-noto-sans text-sm tracking-wide"
+          dateTime="2023-04-01"
+        >
+          <span className="font-noto-sans font-medium">Created At:</span>{" "}
+          2023-04-01
+        </time>
+      </div>
       <hr className="border-b border-border" />
       <CreateTaskButton />
 
