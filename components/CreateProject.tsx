@@ -1,9 +1,15 @@
 "use client";
+import { api } from "@/convex/_generated/api";
+import { useUser } from "@clerk/clerk-react";
+import { useMutation } from "convex/react";
 import { useRef } from "react";
+import toast from "react-hot-toast";
 import Input from "./Input";
 import ModalLayout from "./ModalLayout";
 
 export default function CreateProject() {
+  const { user, isSignedIn } = useUser();
+  const createProject = useMutation(api.projects.createProject);
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleOpen = () => {
@@ -20,23 +26,28 @@ export default function CreateProject() {
 
     const projectName = formData.get("projectName") as string;
 
-    if (projectName) {
-      console.log("Project created successfully");
+    if (projectName && isSignedIn) {
+      try {
+        await toast.promise(
+          createProject({ clerk_id: user.id, name: projectName }),
+          {
+            loading: "Creating project...",
+            success: "Project created successfully",
+            error: "Error creating project",
+          },
+        );
 
-      console.log(modalRef.current, "Modal ref");
-
-      formData.set("projectName", "zubayer");
-      console.log(formData.get("projectName"));
-      // TODO: Create project
-      // if (modalRef.current) {
-      //   modalRef.current.style.visibility = "hidden";
-      //   modalRef.current.style.opacity = "0";
-      // }
+        if (modalRef.current) {
+          modalRef.current.style.visibility = "hidden";
+          modalRef.current.style.opacity = "0";
+        }
+      } catch {
+        toast.error("Error creating project");
+      }
     }
   };
 
   const handleClose = () => {
-    console.log(modalRef.current, "Modal ref");
     if (modalRef.current) {
       modalRef.current.style.visibility = "hidden";
       modalRef.current.style.opacity = "0";
@@ -55,6 +66,7 @@ export default function CreateProject() {
         +
       </button>
 
+      {/* {isOpen && ( */}
       <ModalLayout handleClose={handleClose} ref={modalRef}>
         <form onSubmit={handleSubmit}>
           <Input
@@ -70,6 +82,7 @@ export default function CreateProject() {
           </button>
         </form>
       </ModalLayout>
+      {/* )} */}
     </div>
   );
 }

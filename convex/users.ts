@@ -164,3 +164,19 @@ export async function currentUserQuery(
     .filter((q) => q.eq("tokenIdentifier", identity.tokenIdentifier))
     .unique();
 }
+
+export async function getUserByIndex(
+  ctx: QueryCtx | MutationCtx,
+  clerk_id: string,
+) {
+  try {
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_clerkId", (q) => q.eq("clerk_id", clerk_id))
+      .unique();
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}

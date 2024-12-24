@@ -20,8 +20,8 @@ export default defineSchema({
 
   projects: defineTable({
     name: v.string(),
-    description: v.optional(v.string()),
     owner_id: v.id("users"),
+    description: v.optional(v.string()),
   }).index("by_name", ["name"]),
 
   stages: defineTable({

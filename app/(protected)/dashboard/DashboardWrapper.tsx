@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/sidebar/Sidebar";
+import { ModalProvider } from "@/context/modal/Provider";
 import ProjectProvider from "@/context/project/ProjectProvider";
 
 function DashboardWrapper({ children }: { children: React.ReactNode }) {
@@ -26,15 +27,17 @@ function DashboardWrapper({ children }: { children: React.ReactNode }) {
 
   return (
     <ProjectProvider>
-      <div className="flex min-h-screen bg-dark">
-        <Sidebar />
+      <ModalProvider>
+        <div className="flex min-h-screen bg-dark">
+          <Sidebar />
 
-        <div className="flex w-full flex-col md:pl-64">
-          <Navbar />
+          <div className="flex w-full flex-col md:pl-64">
+            <Navbar />
 
-          {children}
+            {children}
+          </div>
         </div>
-      </div>
+      </ModalProvider>
     </ProjectProvider>
   );
 }
