@@ -1,7 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/sidebar/Sidebar";
+import {Sidebar} from "@/components/sidebar/Sidebar";
 import { ModalProvider } from "@/context/modal/Provider";
 import ProjectProvider from "@/context/project/ProjectProvider";
 

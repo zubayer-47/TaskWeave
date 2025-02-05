@@ -1,7 +1,5 @@
-import { query } from "./_generated/server";
-
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { getUserByIndex } from "./users";
 
 export const createProject = mutation({
@@ -12,6 +10,8 @@ export const createProject = mutation({
   },
   async handler(ctx, { clerk_id, name, description }) {
     const user = await getUserByIndex(ctx, clerk_id);
+
+    console.log(user, "user");
 
     if (!user) {
       throw new Error("Something went wrong. Please try again.");
@@ -41,8 +41,8 @@ export const getProjects = query({
       const projects = await ctx.db.query("projects").collect();
 
       return projects;
-    } catch (error) {
-      throw error;
+    } catch {
+      throw new Error("Error on getting all projects");
     }
   },
 });

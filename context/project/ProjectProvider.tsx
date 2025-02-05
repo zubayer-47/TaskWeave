@@ -139,16 +139,17 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
           const draggedTaskIndex = sourceStageData.tasks.findIndex(
             (task: TaskType) => task.task_id === draggedTaskId,
           );
-          console.log(location.current.dropTargets.length);
+          // console.log(location.current.dropTargets.length);
 
           if (location.current.dropTargets.length === 1) {
             const destinationStageId = location.current.dropTargets[0].data
               .stage_id as string;
 
             if (sourceStageId === destinationStageId) {
+              // If the task is moving within the same stage, then only sort the task vertically.
               const destinationIndex = getReorderDestinationIndex({
                 startIndex: draggedTaskIndex,
-                indexOfTarget: sourceStageData.tasks.length - 1,
+                indexOfTarget: sourceStageData.tasks.length - 1, // last index
                 closestEdgeOfTarget: null,
                 axis: "vertical",
               });
@@ -163,6 +164,7 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
                 sourceStageData.tasks = reorderedData;
               }
             } else {
+              // If the task is moving to a different stage, then move the task to the new stage (horizontally).
               moveTask({
                 currentStageData: stagesData,
                 sourceStageId,
@@ -194,39 +196,39 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
                   destinationTask.data,
                 );
 
-                if (sourceStageId === destinationStageId) {
-                  const destinationIndex = getReorderDestinationIndex({
-                    startIndex: draggedTaskIndex,
-                    indexOfTarget: targetedTaskIndex,
-                    closestEdgeOfTarget,
-                    axis: "vertical",
-                  });
+                // if (sourceStageId === destinationStageId) {
+                //   const destinationIndex = getReorderDestinationIndex({
+                //     startIndex: draggedTaskIndex,
+                //     indexOfTarget: targetedTaskIndex,
+                //     closestEdgeOfTarget,
+                //     axis: "vertical",
+                //   });
 
-                  const updatedTasks = reorderTask({
-                    stage_id: sourceStageId,
-                    startIndex: draggedTaskIndex,
-                    finishIndex: destinationIndex,
-                  });
+                //   const updatedTasks = reorderTask({
+                //     stage_id: sourceStageId,
+                //     startIndex: draggedTaskIndex,
+                //     finishIndex: destinationIndex,
+                //   });
 
-                  if (updatedTasks) {
-                    destinationStageData.tasks = updatedTasks;
-                  }
-                } else {
-                  const destinationIndex =
-                    closestEdgeOfTarget === "bottom"
-                      ? targetedTaskIndex + 1
-                      : targetedTaskIndex;
+                //   if (updatedTasks) {
+                //     destinationStageData.tasks = updatedTasks;
+                //   }
+                // } else {
+                const destinationIndex =
+                  closestEdgeOfTarget === "bottom"
+                    ? targetedTaskIndex + 1
+                    : targetedTaskIndex;
 
-                  moveTask({
-                    currentStageData: stagesData,
-                    movedTaskIndexInSourceStage: draggedTaskIndex,
-                    sourceStageId,
-                    destinationStageId,
-                    movedTaskIndexInDestinationStage: destinationIndex,
-                  });
+                moveTask({
+                  currentStageData: stagesData,
+                  movedTaskIndexInSourceStage: draggedTaskIndex,
+                  sourceStageId,
+                  destinationStageId,
+                  movedTaskIndexInDestinationStage: destinationIndex,
+                });
 
-                  return;
-                }
+                return;
+                // }
               }
             }
           }

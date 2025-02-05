@@ -4,7 +4,8 @@ import Link from "next/link";
 import CreateProject from "../CreateProject";
 import ActiveProjectButton from "./ActiveProjectButton";
 
-export default function Sidebar() {
+export const Sidebar = () => {
+  console.log("Sidebar rendering");
   return (
     <aside className="fixed z-30 flex h-full w-64 flex-col gap-2 overflow-y-auto bg-dashboard-bg transition-all duration-300">
       <Link
@@ -82,4 +83,4 @@ export default function Sidebar() {
       </div>
     </aside>
   );
-}
+};

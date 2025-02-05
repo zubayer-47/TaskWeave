@@ -176,7 +176,7 @@ export async function getUserByIndex(
       .unique();
 
     return user;
-  } catch (error) {
-    throw error;
+  } catch {
+    throw new Error("Something went wrong");
   }
 }

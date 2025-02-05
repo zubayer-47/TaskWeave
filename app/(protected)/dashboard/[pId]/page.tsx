@@ -1,5 +1,4 @@
 "use client";
-
 import { useProject } from "@/context/project/ProjectProvider";
 import { ProjectType } from "@/types/project";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
@@ -16,6 +15,8 @@ function Project() {
       onDrop: handleDrop,
     });
   }, [stagesData, handleDrop]);
+
+  console.log("Project re-rendering");
 
   return (
     <div className="h-full w-full rounded-3xl bg-dark">

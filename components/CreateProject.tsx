@@ -66,7 +66,6 @@ export default function CreateProject() {
         +
       </button>
 
-      {/* {isOpen && ( */}
       <ModalLayout handleClose={handleClose} ref={modalRef}>
         <form onSubmit={handleSubmit}>
           <Input
@@ -82,7 +81,6 @@ export default function CreateProject() {
           </button>
         </form>
       </ModalLayout>
-      {/* )} */}
     </div>
   );
 }

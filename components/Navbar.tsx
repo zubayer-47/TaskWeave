@@ -9,6 +9,8 @@ import SignOutButton from "./SignOutButton";
 export default function Navbar() {
   const user = useUser();
 
+  console.log("Navbar re-rendering");
+
   return (
     <nav className="dropdown flex h-16 items-center justify-end border-b border-border bg-dashboard-bg px-4 py-2">
       <button type="button" data-dropdown-btn>
