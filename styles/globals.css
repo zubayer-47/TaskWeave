@@ -103,7 +103,7 @@
     visibility 150ms ease-in-out;
 }
 
-.dropdown > [data-dropdown-btn]:focus + .dropdown-menu {
+.dropdown>[data-dropdown-btn]:focus+.dropdown-menu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -170,6 +170,7 @@
 }
 
 @keyframes spin {
+
   0%,
   100% {
     box-shadow: 0.2em 0px 0 0px currentcolor;

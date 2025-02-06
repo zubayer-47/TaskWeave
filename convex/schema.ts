@@ -3,7 +3,7 @@ import { v } from "convex/values";
 import {
   stageNameSchema,
   taskPrioritySchema,
-  taskStatusSchema,
+  taskStageSchema,
 } from "./schemaTypes";
 
 export default defineSchema({
@@ -40,9 +40,9 @@ export default defineSchema({
     project_id: v.id("projects"),
     title: v.string(),
     description: v.optional(v.string()),
-    status: taskStatusSchema(),
+    stage_name: taskStageSchema(),
     priority: taskPrioritySchema(),
-    assignees: v.array(v.id("users")),
+    assignees: v.optional(v.array(v.id("users"))),
     position: v.number(),
   })
     .index("by_stage_id", ["stage_id"])

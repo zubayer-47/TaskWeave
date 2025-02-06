@@ -4,7 +4,7 @@ import { ProjectType } from "@/types/project";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import clsx from "clsx";
 import { useEffect } from "react";
-import CreateTaskButton from "./components/CreateTaskButton";
+import CreateTask from "./components/CreateTask";
 import TaskStage from "./components/TaskStage";
 
 function Project() {
@@ -32,7 +32,7 @@ function Project() {
         </time>
       </div>
       <hr className="border-b border-border" />
-      <CreateTaskButton />
+      <CreateTask />
 
       <div
         className={clsx(

@@ -196,39 +196,40 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
                   destinationTask.data,
                 );
 
-                // if (sourceStageId === destinationStageId) {
-                //   const destinationIndex = getReorderDestinationIndex({
-                //     startIndex: draggedTaskIndex,
-                //     indexOfTarget: targetedTaskIndex,
-                //     closestEdgeOfTarget,
-                //     axis: "vertical",
-                //   });
+                if (sourceStageId === destinationStageId) {
+                  const destinationIndex = getReorderDestinationIndex({
+                    startIndex: draggedTaskIndex,
+                    indexOfTarget: targetedTaskIndex,
+                    closestEdgeOfTarget,
+                    axis: "vertical",
+                  });
 
-                //   const updatedTasks = reorderTask({
-                //     stage_id: sourceStageId,
-                //     startIndex: draggedTaskIndex,
-                //     finishIndex: destinationIndex,
-                //   });
+                  const updatedTasks = reorderTask({
+                    stage_id: sourceStageId,
+                    startIndex: draggedTaskIndex,
+                    finishIndex: destinationIndex,
+                  });
 
-                //   if (updatedTasks) {
-                //     destinationStageData.tasks = updatedTasks;
-                //   }
-                // } else {
-                const destinationIndex =
-                  closestEdgeOfTarget === "bottom"
-                    ? targetedTaskIndex + 1
-                    : targetedTaskIndex;
+                  if (updatedTasks) {
+                    destinationStageData.tasks = updatedTasks;
+                  }
+                } else {
+                  const destinationIndex =
+                    closestEdgeOfTarget === "bottom"
+                      ? targetedTaskIndex + 1
+                      : targetedTaskIndex;
 
-                moveTask({
-                  currentStageData: stagesData,
-                  movedTaskIndexInSourceStage: draggedTaskIndex,
-                  sourceStageId,
-                  destinationStageId,
-                  movedTaskIndexInDestinationStage: destinationIndex,
-                });
+                  moveTask({
+                    currentStageData: stagesData,
+                    movedTaskIndexInSourceStage: draggedTaskIndex,
+                    sourceStageId,
+                    destinationStageId,
+                    movedTaskIndexInDestinationStage: destinationIndex,
+                  });
 
-                return;
-                // }
+                  return;
+                  // }
+                }
               }
             }
           }

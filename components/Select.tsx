@@ -37,7 +37,7 @@ export default function Select({
         onChange={handleChange}
         required={required}
         disabled={disabled}
-        className="input p-2"
+        className="input p-2 text-slate-900 ring-slate-300 focus:ring-slate-500"
       >
         {children}
       </select>

@@ -1,6 +1,6 @@
 import { v } from "convex/values";
 import { mutation, MutationCtx, query } from "./_generated/server";
-import { taskPrioritySchema, taskStatusSchema } from "./schemaTypes";
+import { taskPrioritySchema, taskStageSchema } from "./schemaTypes";
 
 export const getTasks = query({
   args: {},
@@ -16,13 +16,21 @@ export const createTask = mutation({
     stage_id: v.id("stages"),
     title: v.string(),
     description: v.optional(v.string()),
-    status: taskStatusSchema(),
+    stage_name: taskStageSchema(),
     priority: taskPrioritySchema(),
     assignees: v.array(v.id("users")),
   },
   handler: async (
     ctx,
-    { title, description, stage_id, assignees, priority, status, project_id },
+    {
+      title,
+      description,
+      stage_id,
+      assignees,
+      priority,
+      stage_name,
+      project_id,
+    },
   ) => {
     try {
       // check if task with this title already exists
@@ -39,7 +47,7 @@ export const createTask = mutation({
         stage_id,
         title,
         description,
-        status,
+        stage_name,
         priority,
         assignees,
         position: maxPosition + 1,
@@ -64,13 +72,13 @@ export const updateTask = mutation({
     id: v.id("tasks"),
     title: v.optional(v.string()),
     description: v.optional(v.string()),
-    status: v.optional(taskStatusSchema()),
+    stage_name: v.optional(taskStageSchema()),
     priority: v.optional(taskPrioritySchema()),
     assignees: v.optional(v.array(v.id("users"))),
   },
   handler: async (
     ctx,
-    { id, title, description, status, priority, assignees },
+    { id, title, description, stage_name, priority, assignees },
   ) => {
     try {
       if (title) {
@@ -82,7 +90,7 @@ export const updateTask = mutation({
       await ctx.db.patch(id, {
         title: title,
         description: description,
-        status: status,
+        stage_name,
         priority: priority,
         assignees: assignees,
       });

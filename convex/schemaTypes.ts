@@ -9,7 +9,7 @@ export const stageNameSchema = () =>
     v.literal("COMPLETED"),
   );
 
-export const taskStatusSchema = () =>
+export const taskStageSchema = () =>
   v.union(
     v.literal("TODO"),
     v.literal("IN_PROGRESS"),
@@ -28,5 +28,5 @@ export const taskPrioritySchema = () =>
   );
 
 // typescript types from convex
-export type TaskStatus = ReturnType<typeof taskStatusSchema>;
+export type TaskStage = ReturnType<typeof taskStageSchema>;
 export type TaskPriority = ReturnType<typeof taskPrioritySchema>;
