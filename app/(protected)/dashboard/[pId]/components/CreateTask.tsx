@@ -33,7 +33,28 @@ export default function CreateTask() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // new FormData(e.target as HTMLFormElement);
+    const formData = new FormData(e.currentTarget);
+
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const priority = formData.get("priority") as string;
+    const stage = formData.get("stage") as string;
+    // const date = formData.get("date") as string;
+    const assigneesStr = formData.get("assignees") as string;
+    const assignees = assigneesStr.split(",").map((email) => email.trim());
+
+    console.log({ title, description, priority, stage, assignees });
+
+    if (title && priority && stage) {
+      console.log("Project created successfully");
+      // TODO: Create project
+      if (modalRef.current) {
+        modalRef.current.style.visibility = "hidden";
+        modalRef.current.style.opacity = "0";
+      }
+
+      e.currentTarget.reset();
+    }
   };
 
   return (
@@ -45,9 +66,9 @@ export default function CreateTask() {
         className="invisible fixed inset-0 z-50 grid h-full w-full place-content-center bg-slate-900/30 bg-opacity-70 opacity-0 backdrop-blur-[2px] transition-all duration-200"
       >
         <div className="mx-2">
-          <div className="w-full rounded-md bg-slate-100 md:w-[350px]">
+          <div className="w-full rounded-md bg-slate-100 md:w-[450px]">
             <div className="flex items-center justify-between border-b border-slate-300 p-4">
-              <h2 className="text-base font-semibold">Create Task</h2>
+              <h2 className="text-xl font-semibold">Create Task</h2>
 
               <CircleX
                 onClick={handleClose}
@@ -56,10 +77,10 @@ export default function CreateTask() {
             </div>
             <form className="mt-3 px-4 pb-4" onSubmit={handleSubmit}>
               <Input
-                id="projectName"
+                id="title"
                 label="Task Title"
                 placeholder="Enter project name"
-                name="projectName"
+                name="title"
                 required
               />
 
@@ -79,47 +100,37 @@ export default function CreateTask() {
                   onChange={handleDescriptionChange}
                   required
                   rows={2}
-                  className={clsx(
-                    "input mt-3 border-none p-2 text-slate-900 ring-slate-300 focus:text-slate-100 focus:outline-none focus:ring-slate-500",
-                    {
-                      // "ring-rose-500 focus:ring-rose-500": error,
-                      // "text-slate-500": disabled,
-                      // "text-slate-900 ring-slate-300 focus:ring-slate-500":
-                      //   theme === "light",
-                      // "p-2": size === "md",
-                      // "p-3": size === "lg",
-                    },
-                  )}
+                  className="input mt-3 border-none p-2 text-slate-900 ring-slate-300 focus:outline-none focus:ring-slate-500"
                   placeholder="Enter task description"
                 />
               </div>
 
-              <div className="flex w-full items-center justify-between gap-3">
-                <Select id="stage" label="Stage" name="stage" required>
-                  <option value="1">Ready to Start</option>
-                  <option value="2">In Progress</option>
-                  <option value="3">Review</option>
-                  <option value="4">Done</option>
-                  <option value="5">Stuck</option>
-                </Select>
+              {/* <div className="flex w-full items-center justify-between gap-3"> */}
+              <Select id="stage" label="Stage" name="stage" required>
+                <option value="Ready to Start">Ready to Start</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Review">Review</option>
+                <option value="Done">Done</option>
+                <option value="Stuck">Stuck</option>
+              </Select>
 
-                <Input
+              {/* <Input
                   id="date"
                   label="Date"
                   type="date"
                   name="date"
                   required
-                />
-              </div>
+                /> */}
+              {/* </div> */}
 
-              <Select id="status" label="Status" name="status" required>
+              <Select id="priority" label="Priority" name="priority" required>
                 <option value="1">Urgent</option>
                 <option value="2">High</option>
                 <option value="3">Medium</option>
                 <option value="4">Low</option>
               </Select>
 
-              <MultiEmailInput />
+              <MultiEmailInput name="assignees" />
 
               <button type="submit" className="button mt-3 w-full p-2">
                 Create Task

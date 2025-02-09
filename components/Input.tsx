@@ -8,7 +8,7 @@ type Props = {
   label?: string;
   hint?: string;
   required?: boolean;
-  defaultValue?: string | null;
+  defaultValue?: string;
   theme?: "light" | "dark";
   size?: "md" | "lg";
   forgot_password?: boolean;
@@ -25,9 +25,8 @@ export default function Input({
   placeholder,
   hint,
   required,
-  defaultValue,
+  defaultValue = "",
   theme = "light",
-
   size = "md",
   forgot_password,
   type = "text",
@@ -36,7 +35,8 @@ export default function Input({
   disabled,
   autoComplete,
 }: Props) {
-  const [value, setValue] = useState(defaultValue || "");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setValue] = useState(defaultValue);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -60,7 +60,8 @@ export default function Input({
         type={type}
         id={id}
         name={name}
-        value={value}
+        // value={value}
+        defaultValue={defaultValue}
         onChange={handleChange}
         required={required}
         disabled={disabled}

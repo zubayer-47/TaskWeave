@@ -3,13 +3,19 @@ import { FieldValues, useForm } from "react-hook-form";
 import { FormContext } from "./FormContext";
 
 type FormProps<T extends FieldValues> = {
-  schema: any;
-  initialValues: any;
+  schema: T; // change it later
+  initialValues: T; // change it later
   children: ReactNode;
 };
 
-export const Form = ({ children }: FormProps) => {
-  const form = useForm();
+export const Form = <T extends FieldValues>({
+  schema,
+  initialValues,
+  children,
+}: FormProps<T>) => {
+  const form = useForm<T>({
+    defaultValues: initialValues,
+  });
 
   const onSubmit = (values: any) => {
     console.log(values);
