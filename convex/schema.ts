@@ -39,11 +39,11 @@ export default defineSchema({
     stage_id: v.id("stages"),
     project_id: v.id("projects"),
     title: v.string(),
-    description: v.optional(v.string()),
     stage_name: taskStageSchema(),
     priority: taskPrioritySchema(),
-    assignees: v.optional(v.array(v.id("users"))),
     position: v.number(),
+    description: v.optional(v.string()),
+    assignees: v.optional(v.array(v.id("users"))),
   })
     .index("by_stage_id", ["stage_id"])
     .index("by_title", ["title"])
