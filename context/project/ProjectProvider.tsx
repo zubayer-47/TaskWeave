@@ -50,17 +50,19 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 
   const moveTask = useCallback(
     ({
+      currentStageData,
       movedTaskIndexInSourceStage,
       sourceStageId,
       destinationStageId,
       movedTaskIndexInDestinationStage,
     }: {
+      currentStageData: StageType[];
       movedTaskIndexInSourceStage: number;
       sourceStageId: string;
       destinationStageId: string;
       movedTaskIndexInDestinationStage?: number;
     }) => {
-      const clonedStagesData = [...stagesData];
+      const clonedStagesData = [...currentStageData];
 
       const sourceStageData = clonedStagesData.find(
         (stage) => stage.stage_id === sourceStageId,
@@ -112,7 +114,7 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
 
       setStagesData(() => clonedStagesData);
     },
-    [stagesData, setStagesData],
+    [setStagesData],
   );
 
   const handleDrop = useCallback(
@@ -137,16 +139,17 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
           const draggedTaskIndex = sourceStageData.tasks.findIndex(
             (task: TaskType) => task.task_id === draggedTaskId,
           );
-          console.log(location.current.dropTargets.length);
+          // console.log(location.current.dropTargets.length);
 
           if (location.current.dropTargets.length === 1) {
             const destinationStageId = location.current.dropTargets[0].data
               .stage_id as string;
 
             if (sourceStageId === destinationStageId) {
+              // If the task is moving within the same stage, then only sort the task vertically.
               const destinationIndex = getReorderDestinationIndex({
                 startIndex: draggedTaskIndex,
-                indexOfTarget: sourceStageData.tasks.length - 1,
+                indexOfTarget: sourceStageData.tasks.length - 1, // last index
                 closestEdgeOfTarget: null,
                 axis: "vertical",
               });
@@ -161,7 +164,9 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
                 sourceStageData.tasks = reorderedData;
               }
             } else {
+              // If the task is moving to a different stage, then move the task to the new stage (horizontally).
               moveTask({
+                currentStageData: stagesData,
                 sourceStageId,
                 destinationStageId,
                 movedTaskIndexInSourceStage: draggedTaskIndex,
@@ -215,6 +220,7 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
                       : targetedTaskIndex;
 
                   moveTask({
+                    currentStageData: stagesData,
                     movedTaskIndexInSourceStage: draggedTaskIndex,
                     sourceStageId,
                     destinationStageId,
@@ -222,6 +228,7 @@ const ProjectProvider = ({ children }: { children: React.ReactNode }) => {
                   });
 
                   return;
+                  // }
                 }
               }
             }

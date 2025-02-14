@@ -1,17 +1,16 @@
 import clsx from "clsx";
-import Link from "next/link";
-import { HTMLInputAutoCompleteAttribute, useState } from "react";
+import { HTMLInputAutoCompleteAttribute, useEffect } from "react";
+import { Control, FieldValues, useController } from "react-hook-form";
 
 type Props = {
   id: string;
   name: string;
+  control: Control<FieldValues>;
   label?: string;
-  hint?: string;
   required?: boolean;
   defaultValue?: string;
   theme?: "light" | "dark";
   size?: "md" | "lg";
-  forgot_password?: boolean;
   placeholder?: string;
   type?: "text" | "email" | "password" | "date";
   error?: string;
@@ -22,25 +21,30 @@ type Props = {
 export default function Input({
   id,
   label,
+  control,
   placeholder,
-  hint,
   required,
-  defaultValue = "",
+  defaultValue,
   theme = "light",
   size = "md",
-  forgot_password,
   type = "text",
   error,
   name,
   disabled,
   autoComplete,
 }: Props) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setValue] = useState(defaultValue);
+  const { field } = useController({
+    name,
+    control,
+    defaultValue: "",
+  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
+  useEffect(() => {
+    console.log("firing useEffect from InputField");
+    if (defaultValue) {
+      field.onChange(defaultValue);
+    }
+  }, [defaultValue, field]);
 
   return (
     <div className="space-y-1">
@@ -56,13 +60,11 @@ export default function Input({
           {label}
         </label>
       )}
+
       <input
         type={type}
         id={id}
-        name={name}
-        // value={value}
-        defaultValue={defaultValue}
-        onChange={handleChange}
+        {...field}
         required={required}
         disabled={disabled}
         autoComplete={autoComplete}
@@ -78,22 +80,6 @@ export default function Input({
         })}
         placeholder={placeholder}
       />
-
-      {forgot_password && (
-        <Link
-          href="/forgot-password"
-          className="font-noto-sans text-sm font-medium tracking-wide text-primary-foreground transition-all duration-200 hover:text-primary-foreground/80"
-        >
-          Forgot password?
-        </Link>
-      )}
-      {error && <p className="error">{error}</p>}
-
-      {hint && (
-        <p className="hidden text-sm text-slate-500 peer-focus:block peer-focus:animate-fadeIn">
-          {hint}
-        </p>
-      )}
     </div>
   );
 }

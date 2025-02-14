@@ -4,19 +4,23 @@ import Link from "next/link";
 import CreateProject from "../CreateProject";
 import ActiveProjectButton from "./ActiveProjectButton";
 
-export default function Sidebar() {
+export const Sidebar = () => {
+  console.log("Sidebar rendering");
   return (
     <aside className="fixed z-30 flex h-full w-64 flex-col gap-2 overflow-y-auto bg-dashboard-bg transition-all duration-300">
       <Link
         href="/"
-        className="flex h-16 w-full flex-col items-center justify-center border-b border-border"
+        className="flex h-16 w-full items-center border-b border-border"
       >
         <Image
-          className="px-2 py-2"
+          className="w-56 px-2 py-2"
           src={taskWeaveLogo}
           alt="Dashboard Feature Image"
           priority
         />
+        <sup className="text-muted font-noto-sans text-xs tracking-wide text-emerald-500">
+          Beta
+        </sup>
       </Link>
 
       <div>
@@ -79,4 +83,4 @@ export default function Sidebar() {
       </div>
     </aside>
   );
-}
+};
