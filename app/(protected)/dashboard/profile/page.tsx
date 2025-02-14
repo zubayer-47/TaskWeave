@@ -106,7 +106,7 @@ export default function Profile() {
               required
               theme="dark"
               size="lg"
-              defaultValue={user?.firstName}
+              defaultValue={user?.firstName || ""}
             />
             <Input
               id="lastname"
@@ -117,7 +117,7 @@ export default function Profile() {
               required
               theme="dark"
               size="lg"
-              defaultValue={user?.lastName}
+              defaultValue={user?.lastName || ""}
             />
             <Input
               id="email"
@@ -129,7 +129,7 @@ export default function Profile() {
               theme="dark"
               size="lg"
               disabled
-              defaultValue={user?.emailAddresses[0].emailAddress}
+              defaultValue={user?.emailAddresses[0].emailAddress || ""}
             />
 
             <div>
@@ -165,7 +165,7 @@ export default function Profile() {
                 name="bio"
                 theme="dark"
                 size="lg"
-                defaultValue={user?.unsafeMetadata.bio as string}
+                defaultValue={(user?.unsafeMetadata.bio as string) || ""}
               />
             </div>
 

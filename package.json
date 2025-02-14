@@ -14,6 +14,7 @@
     "@clerk/backend": "^1.18.1",
     "@clerk/clerk-react": "^5.15.5",
     "@clerk/nextjs": "^6.3.4",
+    "@hookform/resolvers": "^4.0.0",
     "@reduxjs/toolkit": "^2.3.0",
     "clsx": "^2.1.1",
     "convex": "^1.17.0",
@@ -24,7 +25,8 @@
     "react-hook-form": "^7.54.2",
     "react-hot-toast": "^2.4.1",
     "react-redux": "^9.1.2",
-    "svix": "^1.42.0"
+    "svix": "^1.42.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -4,12 +4,13 @@ import { FormContext } from "./FormContext";
 
 type FormProps<T extends FieldValues> = {
   schema: T; // change it later
-  initialValues: T; // change it later
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  initialValues: any; // change it later
   children: ReactNode;
 };
 
 export const Form = <T extends FieldValues>({
-  schema,
+  // schema,
   initialValues,
   children,
 }: FormProps<T>) => {
@@ -17,6 +18,7 @@ export const Form = <T extends FieldValues>({
     defaultValues: initialValues,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (values: any) => {
     console.log(values);
   };
